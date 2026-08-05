@@ -409,6 +409,93 @@ section { position: relative; z-index: 1; padding: 5.5rem 0; }
 .product-card:hover::before { opacity: 1; }
 .product-card.highlight { border-color: rgba(255, 212, 59, 0.25); }
 .product-card.highlight .prod-icon { color: #fbbf24; }
+
+/* ============ PDD 在售商品 ============ */
+.pdd-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 4rem 0 1.5rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--line);
+}
+.pdd-head .pdd-badge {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  background: var(--primary);
+  padding: 0.22rem 0.6rem;
+  border-radius: 3px;
+}
+.pdd-head h3 { font-size: 1.25rem; font-weight: 700; color: var(--text); letter-spacing: 0.5px; }
+.pdd-head p { color: var(--muted); font-size: 0.85rem; margin-left: auto; font-family: var(--mono); }
+.pdd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.25rem;
+}
+.pdd-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+.pdd-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+  box-shadow: var(--glow);
+}
+.pdd-img {
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  background: var(--bg-soft);
+  position: relative;
+}
+.pdd-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+.pdd-card:hover .pdd-img img { transform: scale(1.05); }
+.pdd-img .pdd-sold {
+  position: absolute;
+  top: 0.6rem; right: 0.6rem;
+  background: rgba(7, 20, 30, 0.75);
+  color: #fff;
+  font-size: 0.7rem;
+  font-family: var(--mono);
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  backdrop-filter: blur(4px);
+}
+.pdd-info { padding: 1.1rem 1.2rem 1.2rem; display: flex; flex-direction: column; flex: 1; }
+.pdd-info h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.85rem;
+}
+.pdd-info .pdd-desc {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  margin-bottom: 0.9rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.56rem;
+}
+.pdd-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+.pdd-price { color: var(--primary); font-family: var(--mono); font-weight: 700; font-size: 1.05rem; }
+.pdd-price small { font-size: 0.7rem; font-weight: 400; }
+.pdd-cat { color: var(--muted); font-size: 0.72rem; font-family: var(--mono); }
 .prod-icon {
   width: 44px; height: 44px;
   margin-bottom: 1.25rem;
@@ -839,6 +926,165 @@ footer .footer-links a:hover { color: var(--primary); }
           </div>
         </div>
       </article>
+    </div>
+
+    <div class="pdd-head fade-in">
+      <span class="pdd-badge">拼多多在售</span>
+      <h3>现货即发 · 已上架</h3>
+      <p>PDD MALL · LIVE</p>
+    </div>
+    <div class="pdd-grid" id="pdd-goods">
+
+      <article class="pdd-card fade-in">
+        <div class="pdd-img">
+          <img src="assets/img/pdd/980085530687_v100-dual-64g.webp" alt="AI服务器 V100 32g 双卡 64G显存" loading="lazy" width="480" height="480">
+          <span class="pdd-sold">已售 1</span>
+        </div>
+        <div class="pdd-info">
+          <h4>AI服务器 V100 32g 双卡 64G显存</h4>
+          <p class="pdd-desc">处理器:2颗 E5-2696 v4,一共44核88线程,2.4GHz主频。主板: 华南F8d-plus X99双路主板。</p>
+          <div class="pdd-bottom">
+            <span class="pdd-price"><small>¥</small>1.58万</span>
+            <span class="pdd-cat">服务器整机</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pdd-card fade-in">
+        <div class="pdd-img">
+          <img src="assets/img/pdd/971882856827_a100-40g-water.webp" alt="a100 40g分体水冷显卡" loading="lazy" width="480" height="480">
+          <span class="pdd-sold">已售 0</span>
+        </div>
+        <div class="pdd-info">
+          <h4>a100 40g分体水冷显卡</h4>
+          <p class="pdd-desc">a100 40g分体水冷显卡，旗舰级 AI 算力。</p>
+          <div class="pdd-bottom">
+            <span class="pdd-price"><small>¥</small>2.50万</span>
+            <span class="pdd-cat">显卡</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pdd-card fade-in">
+        <div class="pdd-img">
+          <img src="assets/img/pdd/945702380249_qwen27b-server.webp" alt="qwen3.6-27B部署神器" loading="lazy" width="480" height="480">
+          <span class="pdd-sold">已售 0</span>
+        </div>
+        <div class="pdd-info">
+          <h4>qwen3.6-27B部署神器</h4>
+          <p class="pdd-desc">技嘉MZ92-FS0机架式服务器准系统,AMD EPYC 7302 16核CPU,128G DDR4 ECC内存(16G×8)。</p>
+          <div class="pdd-bottom">
+            <span class="pdd-price"><small>¥</small>2.69万</span>
+            <span class="pdd-cat">服务器整机</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pdd-card fade-in">
+        <div class="pdd-img">
+          <img src="assets/img/pdd/939468728609_dual2696-v100-16g.webp" alt="双路2696V4+V10016G token制造机" loading="lazy" width="480" height="480">
+          <span class="pdd-sold">已售 0</span>
+        </div>
+        <div class="pdd-info">
+          <h4>双路2696V4+V10016G token制造机</h4>
+          <p class="pdd-desc">E5-2696V4双路水冷主机,DDR4 32G,512G固态,Tesla V100 16G+16G双显卡,CPU+GPU全水冷。</p>
+          <div class="pdd-bottom">
+            <span class="pdd-price"><small>¥</small>6,880</span>
+            <span class="pdd-cat">DIY兼容机</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pdd-card fade-in">
+        <div class="pdd-img">
+          <img src="assets/img/pdd/905603049142_v100-water-block.webp" alt="tesla v100水冷板" loading="lazy" width="480" height="480">
+          <span class="pdd-sold">已售 98</span>
+        </div>
+        <div class="pdd-info">
+          <h4>tesla v100水冷板</h4>
+          <p class="pdd-desc">V100-SXM2紫铜水冷头,全新。CNC精制,50x50mm铜底直触核心,支持V100/P100/A100-32G/SXM2接口卡。</p>
+          <div class="pdd-bottom">
+            <span class="pdd-price"><small>¥</small>120</span>
+            <span class="pdd-cat">散热器/风扇</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pdd-card fade-in">
+        <div class="pdd-img">
+          <img src="assets/img/pdd/887887924012_openclaw-server.webp" alt="openclaw高性能AI运算服务器,预装ollama+qwen3.5:9B+openclaw" loading="lazy" width="480" height="480">
+          <span class="pdd-sold">已售 2</span>
+        </div>
+        <div class="pdd-info">
+          <h4>openclaw高性能AI运算服务器</h4>
+          <p class="pdd-desc">预装ollama+qwen3.5:9B+openclaw,16核32线程,深度学习/多开工作室专用主机。</p>
+          <div class="pdd-bottom">
+            <span class="pdd-price"><small>¥</small>3,500</span>
+            <span class="pdd-cat">服务器整机</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pdd-card fade-in">
+        <div class="pdd-img">
+          <img src="assets/img/pdd/876422889703_sxm2-v100-8x32g.webp" alt="超微SXM2TeslaV10032G8卡高性能服务器" loading="lazy" width="480" height="480">
+          <span class="pdd-sold">已售 0</span>
+        </div>
+        <div class="pdd-info">
+          <h4>超微SXM2 Tesla V100 32G 8卡服务器</h4>
+          <p class="pdd-desc">超微4029-TVRT SXM2 Tesla V100 8卡服务器,存储盘P4510 4T。</p>
+          <div class="pdd-bottom">
+            <span class="pdd-price"><small>¥</small>6.60万</span>
+            <span class="pdd-cat">服务器整机</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pdd-card fade-in">
+        <div class="pdd-img">
+          <img src="assets/img/pdd/876372986959_sxm2-v100-8x16g.webp" alt="超微4029-TVRTSXM2V1008卡16G高性能整机服务器" loading="lazy" width="480" height="480">
+          <span class="pdd-sold">已售 0</span>
+        </div>
+        <div class="pdd-info">
+          <h4>超微4029-TVRT SXM2 V100 8卡16G整机服务器</h4>
+          <p class="pdd-desc">超微4029-TVRT SXM2 V100 8卡16G整机服务器,高性能计算。</p>
+          <div class="pdd-bottom">
+            <span class="pdd-price"><small>¥</small>3.49万</span>
+            <span class="pdd-cat">服务器整机</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pdd-card fade-in">
+        <div class="pdd-img">
+          <img src="assets/img/pdd/864163237459_qwen27b-dual-v100.webp" alt="Qwen3.6-27B 32G双路V100计算卡 分体式水冷" loading="lazy" width="480" height="480">
+          <span class="pdd-sold">已售 2</span>
+        </div>
+        <div class="pdd-info">
+          <h4>Qwen3.6-27B 32G双路V100计算卡</h4>
+          <p class="pdd-desc">处理器:2颗 E5-2696 v4,一共44核88线程,2.4GHz主频。主板: 华南F8d-plus X99双路主板。</p>
+          <div class="pdd-bottom">
+            <span class="pdd-price"><small>¥</small>1.45万</span>
+            <span class="pdd-cat">DIY一体机</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pdd-card fade-in">
+        <div class="pdd-img">
+          <img src="assets/img/pdd/862319073021_v100-5600g-comfyui.webp" alt="tesla v100 32G + 锐龙5600G,分体水冷,到手即用,comfyui神机" loading="lazy" width="480" height="480">
+          <span class="pdd-sold">已售 4</span>
+        </div>
+        <div class="pdd-info">
+          <h4>tesla v100 32G + 锐龙5600G comfyui神机</h4>
+          <p class="pdd-desc">部署opencode/Heartmula/Infinite talk整合包,实现AI音乐AI MV。CPU: AMD Ryzen 5 5600G。</p>
+          <div class="pdd-bottom">
+            <span class="pdd-price"><small>¥</small>8,000</span>
+            <span class="pdd-cat">DIY兼容机</span>
+          </div>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
