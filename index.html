@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a0e1a">
+<meta name="theme-color" content="#04060c">
 
 <!-- Primary SEO -->
 <title>四川积电汇芯科技有限公司 - 本地化AI算力解决方案提供商</title>
@@ -29,7 +29,7 @@
 <meta name="twitter:image" content="https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp">
 
 <!-- Favicon (inline SVG, 零额外请求) -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0e1a'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2306b6d4' font-family='sans-serif' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
 
 <!-- JSON-LD 结构化数据 -->
 <script type="application/ld+json">
@@ -81,24 +81,22 @@
 <style>
 /* ============ 设计令牌 ============ */
 :root {
-  --bg: #0a0e1a;
-  --bg-alt: #0d1224;
-  --card: #111827;
-  --card-hover: #16203a;
-  --primary: #06b6d4;
-  --secondary: #3b82f6;
-  --accent: #22d3ee;
-  --text: #e2e8f0;
-  --muted: #94a3b8;
-  --border: rgba(6, 182, 212, 0.12);
-  --glow: rgba(6, 182, 212, 0.3);
-  --radius: 16px;
-  --radius-sm: 10px;
-  --shadow: 0 20px 60px rgba(6, 182, 212, 0.12);
-  --shadow-hover: 0 24px 70px rgba(6, 182, 212, 0.22);
-  --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+  --bg: #f7fafc;            /* 明亮底色 */
+  --bg-soft: #eef4f8;
+  --card: #ffffff;
+  --card-hover: #f0f8fb;
+  --line: rgba(13, 38, 56, 0.10);
+  --line-strong: rgba(6, 145, 180, 0.42);
+  --primary: #0891b2;       /* 电光青（深青，白底对比度佳） */
+  --primary-dim: rgba(8, 145, 178, 0.55);
+  --blue: #2563eb;
+  --text: #0b1f2e;
+  --muted: #56707f;
+  --mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', Consolas, 'Courier New', monospace;
   --font: -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-  --nav-h: 64px;
+  --radius: 10px;
+  --nav-h: 60px;
+  --glow: 0 0 40px rgba(8, 145, 178, 0.16);
 }
 
 /* ============ 基础 ============ */
@@ -112,16 +110,59 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
-canvas#particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+/* 全局网格背景（纯 CSS，零请求） */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.4;
+}
+/* 顶部青色光晕 */
+body::after {
+  content: '';
+  position: fixed;
+  top: -240px; left: 50%;
+  transform: translateX(-50%);
+  width: 900px; height: 480px;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse, rgba(8, 145, 178, 0.08), transparent 65%);
+}
+
 img { max-width: 100%; height: auto; display: block; }
-a { color: var(--primary); }
+a { color: var(--primary); text-decoration: none; }
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
-::selection { background: rgba(6, 182, 212, 0.3); }
+::selection { background: rgba(8, 145, 178, 0.18); }
 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+.container { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* 区块编号标签（等宽字体，科技感） */
+.sec-tag {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  color: var(--primary);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+.sec-tag::before {
+  content: '';
+  width: 28px; height: 1px;
+  background: var(--primary);
+  opacity: 0.6;
+}
 
 /* ============ 导航 ============ */
 header {
@@ -129,18 +170,18 @@ header {
   top: 0; left: 0; right: 0;
   height: var(--nav-h);
   z-index: 100;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  background: rgba(10, 14, 26, 0.85);
-  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid var(--line);
   transition: background 0.3s, box-shadow 0.3s;
 }
 header.scrolled {
-  background: rgba(10, 14, 26, 0.97);
-  box-shadow: 0 2px 30px rgba(6, 182, 212, 0.1);
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 4px 30px rgba(13, 38, 56, 0.08);
 }
 .nav-inner {
-  max-width: 1200px;
+  max-width: 1120px;
   margin: 0 auto;
   height: var(--nav-h);
   display: flex;
@@ -149,20 +190,19 @@ header.scrolled {
   padding: 0 1.5rem;
 }
 .logo {
-  font-size: 1.25rem;
-  font-weight: 800;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: 0.5px;
-  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: var(--mono);
+  color: var(--text);
+  letter-spacing: 1px;
 }
+.logo em { color: var(--primary); font-style: normal; }
 .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
 .nav-links a {
   color: var(--muted);
-  text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  font-family: var(--mono);
+  letter-spacing: 0.5px;
   transition: color 0.3s;
   position: relative;
   padding: 0.25rem 0;
@@ -172,9 +212,9 @@ header.scrolled {
   content: '';
   position: absolute;
   bottom: -2px; left: 0;
-  width: 100%; height: 2px;
-  background: var(--gradient);
-  border-radius: 2px;
+  width: 100%; height: 1px;
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary-dim);
 }
 .hamburger {
   display: none;
@@ -186,14 +226,13 @@ header.scrolled {
   padding: 0.5rem;
 }
 .hamburger span {
-  width: 24px; height: 2px;
+  width: 22px; height: 1.5px;
   background: var(--text);
-  border-radius: 1px;
   transition: 0.3s;
 }
-.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
 .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
 /* ============ Hero ============ */
 #hero {
@@ -202,251 +241,273 @@ header.scrolled {
   min-height: 100svh;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 6rem 1.5rem 3rem;
+  padding: 7rem 1.5rem 3rem;
 }
-.hero-content { max-width: 860px; }
-.hero-badge {
-  display: inline-block;
-  padding: 0.4rem 1.2rem;
-  border-radius: 50px;
-  font-size: 0.85rem;
-  color: var(--accent);
-  border: 1px solid rgba(34, 211, 238, 0.3);
-  background: rgba(34, 211, 238, 0.06);
-  margin-bottom: 1.5rem;
+.hero-prompt {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--primary);
   letter-spacing: 1px;
+  margin-bottom: 1.5rem;
 }
+.hero-prompt::before { content: '> '; color: var(--primary); }
+.hero-prompt::after { content: ' _'; animation: blink 1.1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
 .hero-content h1 {
-  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
-  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: 1px;
   margin-bottom: 1.2rem;
-  background: linear-gradient(135deg, #fff 0%, var(--primary) 60%, var(--secondary) 100%);
+  color: var(--text);
+  line-height: 1.3;
+}
+.hero-content h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--primary), var(--blue));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: fadeInUp 0.8s ease;
-  line-height: 1.25;
 }
 .hero-content p {
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
   color: var(--muted);
   margin-bottom: 2.5rem;
   line-height: 1.9;
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
 .btn {
   display: inline-block;
-  padding: 0.85rem 2.5rem;
-  border-radius: 50px;
-  font-size: 1rem;
+  padding: 0.8rem 2.2rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
   font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s;
+  letter-spacing: 0.5px;
+  transition: all 0.25s;
   cursor: pointer;
-  border: none;
+  border: 1px solid transparent;
+  font-family: var(--font);
 }
 .btn-primary {
-  background: var(--gradient);
-  color: #fff;
-  box-shadow: 0 4px 25px var(--glow);
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 35px var(--glow); }
+.btn-primary:hover { box-shadow: var(--glow); transform: translateY(-1px); }
 .btn-outline {
-  border: 2px solid var(--primary);
-  color: var(--primary);
+  border: 1px solid var(--line-strong);
+  color: var(--text);
   background: transparent;
 }
-.btn-outline:hover { background: var(--primary); color: #000; transform: translateY(-2px); }
+.btn-outline:hover { border-color: var(--primary); color: var(--primary); box-shadow: var(--glow); transform: translateY(-1px); }
 
-.hero-stats {
+/* 状态栏（终端风格） */
+.hero-status {
+  margin-top: 3.5rem;
   display: flex;
-  gap: 2.5rem;
+  gap: 2rem;
   justify-content: center;
-  margin-top: 3rem;
   flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--muted);
 }
-.hero-stats .stat { text-align: center; }
-.hero-stats .stat strong {
-  display: block;
-  font-size: 1.6rem;
-  font-weight: 800;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.hero-status .dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.7);
+  margin-right: 0.4rem;
+  vertical-align: 1px;
 }
-.hero-stats .stat span { color: var(--muted); font-size: 0.85rem; }
+.hero-status strong { color: var(--text); font-weight: 600; margin-left: 0.2rem; }
 
 /* ============ Sections ============ */
-section { position: relative; z-index: 1; padding: 6rem 0; }
-.section-title { text-align: center; margin-bottom: 4rem; }
+section { position: relative; z-index: 1; padding: 5.5rem 0; }
+.section-title { text-align: center; margin-bottom: 3.5rem; }
 .section-title h2 {
-  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-  font-weight: 800;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: 1px;
   margin-bottom: 0.75rem;
+  color: var(--text);
 }
-.section-title p { color: var(--muted); font-size: 1.1rem; }
-.section-title .line {
-  width: 64px; height: 3px;
-  background: var(--gradient);
-  margin: 1.2rem auto 0;
-  border-radius: 3px;
+.section-title p { color: var(--muted); font-size: 1rem; }
+.section-title .sec-tag { justify-content: center; }
+.section-title .sec-tag::before { width: 22px; }
+.section-title .sec-tag::after {
+  content: '';
+  width: 22px; height: 1px;
+  background: var(--primary);
+  opacity: 0.6;
 }
 
 /* ============ About / Stats ============ */
 .about-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 .stat-card {
   background: var(--card);
-  border-radius: var(--radius);
-  padding: 2rem;
+  padding: 2rem 1.5rem;
   text-align: center;
-  border: 1px solid var(--border);
-  transition: all 0.3s;
+  transition: background 0.3s;
 }
-.stat-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--primary);
-  box-shadow: var(--shadow);
-}
+.stat-card:hover { background: var(--card-hover); }
 .stat-card .number {
-  font-size: 2.6rem;
-  font-weight: 800;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 2.2rem;
+  font-weight: 700;
+  font-family: var(--mono);
+  color: var(--primary);
+  text-shadow: 0 0 24px rgba(8, 145, 178, 0.25);
 }
-.stat-card .label { color: var(--muted); margin-top: 0.5rem; font-size: 0.95rem; }
+.stat-card .label { color: var(--muted); margin-top: 0.5rem; font-size: 0.88rem; font-family: var(--mono); letter-spacing: 1px; }
 
 /* ============ Products ============ */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 .product-card {
   background: var(--card);
   border-radius: var(--radius);
+  border: 1px solid var(--line);
+  padding: 1.8rem;
+  transition: all 0.25s;
+  position: relative;
   overflow: hidden;
-  border: 1px solid var(--border);
-  transition: all 0.3s;
-  display: flex;
-  flex-direction: column;
+}
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 .product-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--primary);
-  box-shadow: var(--shadow-hover);
+  border-color: var(--line-strong);
+  background: var(--card-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--glow);
 }
-.product-icon {
-  height: 160px;
-  background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(59,130,246,0.1));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3.5rem;
-  user-select: none;
-}
-.product-info { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
-.product-info h3 { font-size: 1.25rem; margin-bottom: 0.5rem; font-weight: 700; }
-.product-info p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; flex: 1; }
-.product-tags { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
-.tag {
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.78rem;
-  background: rgba(6,182,212,0.08);
+.product-card:hover::before { opacity: 1; }
+.product-card.highlight { border-color: rgba(255, 212, 59, 0.25); }
+.product-card.highlight .prod-icon { color: #fbbf24; }
+.prod-icon {
+  width: 44px; height: 44px;
+  margin-bottom: 1.25rem;
   color: var(--primary);
-  border: 1px solid rgba(6,182,212,0.2);
 }
-.product-card.highlight { border-color: rgba(255, 212, 59, 0.3); }
+.prod-icon svg { width: 100%; height: 100%; }
+.product-info h3 { font-size: 1.12rem; margin-bottom: 0.5rem; font-weight: 600; letter-spacing: 0.5px; }
+.product-info p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+.product-tags { display: flex; gap: 0.5rem; margin-top: 1.1rem; flex-wrap: wrap; }
+.tag {
+  padding: 0.22rem 0.7rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-family: var(--mono);
+  background: rgba(8, 145, 178, 0.06);
+  color: var(--primary);
+  border: 1px solid var(--line);
+}
 
 /* ============ Advantages ============ */
 .adv-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 .adv-card {
   background: var(--card);
   border-radius: var(--radius);
-  padding: 2rem;
-  border: 1px solid var(--border);
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
+  padding: 1.8rem;
+  border: 1px solid var(--line);
+  transition: all 0.25s;
 }
-.adv-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 4px; height: 0;
-  background: var(--gradient);
-  transition: height 0.3s;
+.adv-card:hover {
+  border-color: var(--line-strong);
+  background: var(--card-hover);
+  transform: translateY(-3px);
 }
-.adv-card:hover::before { height: 100%; }
-.adv-card:hover { transform: translateY(-5px); border-color: rgba(6,182,212,0.3); }
-.adv-card .icon { font-size: 2rem; margin-bottom: 1rem; }
-.adv-card h3 { font-size: 1.15rem; margin-bottom: 0.5rem; font-weight: 700; }
-.adv-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+.adv-icon {
+  width: 38px; height: 38px;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+.adv-icon svg { width: 100%; height: 100%; }
+.adv-card h3 { font-size: 1.05rem; margin-bottom: 0.5rem; font-weight: 600; letter-spacing: 0.5px; }
+.adv-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
 
 /* ============ Gallery ============ */
-#gallery, #brand-video { background: rgba(17, 24, 39, 0.45); }
+#gallery, #brand-video { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 1.25rem;
 }
 .gallery-item {
   border-radius: var(--radius);
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s;
-  border: 1px solid var(--border);
+  transition: all 0.25s;
+  border: 1px solid var(--line);
   background: var(--card);
 }
 .gallery-item:hover {
-  transform: translateY(-5px) scale(1.02);
-  border-color: var(--primary);
-  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+  box-shadow: var(--glow);
 }
 .gallery-thumb {
-  height: 180px;
+  height: 170px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #16213e, #0f3460);
-  transition: all 0.3s;
+  gap: 0.9rem;
+  background:
+    linear-gradient(135deg, rgba(8, 145, 178, 0.05), rgba(37, 99, 235, 0.05)),
+    repeating-linear-gradient(0deg, transparent, transparent 9px, rgba(13, 38, 56, 0.05) 9px, rgba(13, 38, 56, 0.05) 10px),
+    repeating-linear-gradient(90deg, transparent, transparent 9px, rgba(13, 38, 56, 0.05) 9px, rgba(13, 38, 56, 0.05) 10px);
 }
-.gallery-thumb .thumb-emoji { font-size: 3rem; }
+.gallery-thumb .g-icon { width: 44px; height: 44px; color: var(--primary); }
+.gallery-thumb .g-icon svg { width: 100%; height: 100%; }
 .gallery-label {
   color: var(--text);
-  font-size: 0.95rem;
-  margin-top: 0.75rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-family: var(--mono);
+  letter-spacing: 1px;
 }
 
 /* ============ Video ============ */
 .video-frame {
-  max-width: 960px;
+  max-width: 900px;
   margin: 0 auto;
   border-radius: var(--radius);
   overflow: hidden;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 40px rgba(13, 38, 56, 0.10);
   background: #000;
 }
 .video-frame video { width: 100%; display: block; aspect-ratio: 16/9; background: #000; }
-.video-caption { text-align: center; color: var(--muted); margin-top: 1.2rem; font-size: 0.9rem; }
+.video-caption { text-align: center; color: var(--muted); margin-top: 1.2rem; font-size: 0.85rem; font-family: var(--mono); letter-spacing: 1px; }
 
 /* ============ Contact ============ */
 .contact-wrapper {
@@ -455,56 +516,60 @@ section { position: relative; z-index: 1; padding: 6rem 0; }
   gap: 3rem;
   align-items: start;
 }
-.contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+.contact-info { display: flex; flex-direction: column; gap: 1.2rem; }
 .contact-item { display: flex; align-items: center; gap: 1rem; }
 .contact-item .icon {
-  width: 50px; height: 50px;
-  border-radius: 12px;
-  background: rgba(6,182,212,0.08);
+  width: 44px; height: 44px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--card);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
   flex-shrink: 0;
+  color: var(--primary);
 }
-.contact-item .text h4 { font-size: 1rem; margin-bottom: 0.2rem; }
-.contact-item .text p { color: var(--muted); font-size: 0.92rem; }
-.contact-item .text a { color: var(--muted); text-decoration: none; }
+.contact-item .icon svg { width: 20px; height: 20px; }
+.contact-item .text h4 { font-size: 0.95rem; margin-bottom: 0.15rem; color: var(--text); font-family: var(--mono); letter-spacing: 1px; }
+.contact-item .text p { color: var(--muted); font-size: 0.9rem; }
+.contact-item .text a { color: var(--muted); }
 .contact-item .text a:hover { color: var(--primary); }
 
 .contact-form {
   background: var(--card);
   border-radius: var(--radius);
-  padding: 2rem;
-  border: 1px solid var(--border);
+  padding: 1.8rem;
+  border: 1px solid var(--line);
 }
-.form-group { margin-bottom: 1.2rem; }
+.form-group { margin-bottom: 1.1rem; }
 .form-group label {
   display: block;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   margin-bottom: 0.4rem;
   color: var(--muted);
+  font-family: var(--mono);
+  letter-spacing: 1px;
 }
 .form-group input, .form-group textarea {
   width: 100%;
-  padding: 0.8rem 1rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(6,182,212,0.2);
-  background: rgba(6,182,212,0.05);
+  padding: 0.75rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--bg);
   color: var(--text);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   outline: none;
-  transition: border 0.3s, box-shadow 0.3s;
+  transition: border 0.25s, box-shadow 0.25s;
   font-family: inherit;
 }
 .form-group input:focus, .form-group textarea:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.12);
 }
-.form-group textarea { min-height: 110px; resize: vertical; }
-.form-status { display: none; margin-top: 1rem; padding: 0.8rem 1rem; border-radius: var(--radius-sm); font-size: 0.9rem; }
-.form-status.success { display: block; background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.3); color: #4ade80; }
-.form-status.error { display: block; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; }
+.form-group textarea { min-height: 100px; resize: vertical; }
+.form-status { display: none; margin-top: 1rem; padding: 0.7rem 0.9rem; border-radius: 6px; font-size: 0.88rem; font-family: var(--mono); }
+.form-status.success { display: block; background: rgba(52, 211, 153, 0.08); border: 1px solid rgba(52, 211, 153, 0.3); color: #34d399; }
+.form-status.error { display: block; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; }
 .btn-block { width: 100%; }
 .btn[disabled] { opacity: 0.6; cursor: not-allowed; transform: none; }
 
@@ -513,13 +578,15 @@ footer {
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: 2rem 1rem;
-  border-top: 1px solid var(--border);
+  padding: 2.2rem 1rem;
+  border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+  font-family: var(--mono);
+  letter-spacing: 0.5px;
 }
 footer .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 0.8rem; flex-wrap: wrap; }
-footer .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; }
+footer .footer-links a { color: var(--muted); font-size: 0.82rem; font-family: var(--mono); }
 footer .footer-links a:hover { color: var(--primary); }
 
 /* ============ Lightbox ============ */
@@ -527,7 +594,8 @@ footer .footer-links a:hover { color: var(--primary); }
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.92);
+  background: rgba(7, 20, 30, 0.94);
+  backdrop-filter: blur(8px);
   z-index: 1000;
   align-items: center;
   justify-content: center;
@@ -535,57 +603,59 @@ footer .footer-links a:hover { color: var(--primary); }
   cursor: pointer;
 }
 .lightbox.open { display: flex; }
-.lightbox-content { max-width: 80%; max-height: 80%; text-align: center; font-size: 6rem; }
-.lightbox-label { color: var(--text); font-size: 1.2rem; margin-top: 1rem; }
+.lightbox-content { max-width: 80%; max-height: 70%; text-align: center; color: var(--primary); }
+.lightbox-content svg { width: 180px; height: 180px; }
+.lightbox-label { color: var(--text); font-size: 1.05rem; margin-top: 1.2rem; font-family: var(--mono); letter-spacing: 2px; }
 .lightbox-close {
   position: absolute;
   top: 1.5rem; right: 1.5rem;
   color: #fff;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   cursor: pointer;
   background: none;
-  border: none;
-  width: 48px; height: 48px;
+  border: 1px solid var(--line);
+  width: 46px; height: 46px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
 }
-.lightbox-close:hover { background: rgba(255,255,255,0.1); }
+.lightbox-close:hover { border-color: var(--primary); color: var(--primary); }
 .lightbox-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(6, 182, 212, 0.25);
-  border: none;
+  background: transparent;
+  border: 1px solid var(--line);
   color: #fff;
-  font-size: 1.8rem;
-  width: 52px; height: 52px;
+  font-size: 1.6rem;
+  width: 50px; height: 50px;
   border-radius: 50%;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.25s;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.lightbox-nav:hover { background: rgba(6, 182, 212, 0.5); }
+.lightbox-nav:hover { border-color: var(--primary); color: var(--primary); }
 .lightbox-nav.prev { left: 1.5rem; }
 .lightbox-nav.next { right: 1.5rem; }
 
 /* ============ 动效 ============ */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .fade-in {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
 }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .fade-in { opacity: 1; transform: none; transition: none; }
+  .hero-prompt::after { animation: none; }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
@@ -596,20 +666,20 @@ footer .footer-links a:hover { color: var(--primary); }
     position: absolute;
     top: var(--nav-h);
     left: 0; right: 0;
-    background: rgba(10, 14, 26, 0.98);
+    background: rgba(255, 255, 255, 0.98);
     flex-direction: column;
     padding: 1rem 1.5rem 1.5rem;
     gap: 0.25rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--line);
   }
   .nav-links.open { display: flex; }
   .nav-links li { width: 100%; }
-  .nav-links a { display: block; padding: 0.75rem 0.5rem; font-size: 1rem; }
+  .nav-links a { display: block; padding: 0.75rem 0.5rem; font-size: 0.95rem; }
   .hamburger { display: flex; }
   .contact-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
   section { padding: 4rem 0; }
-  .hero-stats { gap: 1.5rem; }
-  .btn { padding: 0.8rem 2rem; }
+  .hero-status { gap: 1.2rem; }
+  .btn { padding: 0.75rem 1.8rem; }
 }
 @media (max-width: 480px) {
   .product-grid { grid-template-columns: 1fr; }
@@ -619,18 +689,17 @@ footer .footer-links a:hover { color: var(--primary); }
 </style>
 </head>
 <body>
-<canvas id="particles" aria-hidden="true"></canvas>
 
 <!-- 导航 -->
 <header id="navbar">
   <nav class="nav-inner" aria-label="主导航">
-    <a href="#hero" class="logo" aria-label="积电汇芯首页">积电汇芯</a>
+    <a href="#hero" class="logo" aria-label="积电汇芯首页">积电<em>汇芯</em></a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#hero" class="active" aria-current="true">首页</a></li>
       <li><a href="#about">关于</a></li>
       <li><a href="#products">产品</a></li>
-      <li><a href="#gallery">实拍</a></li>
       <li><a href="#advantages">优势</a></li>
+      <li><a href="#gallery">实拍</a></li>
       <li><a href="#contact">联系</a></li>
     </ul>
     <button class="hamburger" id="hamburger" aria-label="打开菜单" aria-expanded="false" aria-controls="navLinks">
@@ -643,18 +712,18 @@ footer .footer-links a:hover { color: var(--primary); }
 <!-- Hero -->
 <section id="hero" aria-label="首页介绍">
   <div class="hero-content">
-    <span class="hero-badge">本地化 AI 算力解决方案提供商</span>
-    <h1>四川积电汇芯科技有限公司</h1>
-    <p>让每一家企业都拥有自己的 AI 算力<br>从单卡到多卡集群，从硬件到私有化部署，一站式交付</p>
+    <span class="hero-prompt">本地化 AI 算力解决方案提供商</span>
+    <h1>让每家企业都拥有<br>自己的 <em>AI 算力</em></h1>
+    <p>从单卡到多卡集群，从硬件到私有化部署，一站式交付。数据不出内网，开箱即用。</p>
     <div class="hero-actions">
       <a href="#products" class="btn btn-primary">探索产品</a>
       <a href="#contact" class="btn btn-outline">联系我们</a>
     </div>
-    <div class="hero-stats" aria-label="公司数据">
-      <div class="stat"><strong>300+</strong><span>服务客户</span></div>
-      <div class="stat"><strong>7x24</strong><span>技术支持</span></div>
-      <div class="stat"><strong>99.9%</strong><span>客户满意度</span></div>
-      <div class="stat"><strong>1-8卡</strong><span>灵活配置</span></div>
+    <div class="hero-status" aria-label="公司数据">
+      <span><span class="dot"></span>SYSTEM ONLINE</span>
+      <span>客户 <strong>300+</strong></span>
+      <span>支持 <strong>7x24</strong></span>
+      <span>配置 <strong>1-8卡</strong></span>
     </div>
   </div>
 </section>
@@ -663,9 +732,9 @@ footer .footer-links a:hover { color: var(--primary); }
 <section id="about" aria-label="关于我们">
   <div class="container">
     <div class="section-title fade-in">
+      <span class="sec-tag">01 // ABOUT</span>
       <h2>关于我们</h2>
-      <p>深耕 AI 算力领域，为企业提供端到端解决方案</p>
-      <div class="line"></div>
+      <p>深耕 AI 算力领域，提供端到端解决方案</p>
     </div>
     <div class="about-grid">
       <div class="stat-card fade-in">
@@ -673,16 +742,16 @@ footer .footer-links a:hover { color: var(--primary); }
         <div class="label">服务客户</div>
       </div>
       <div class="stat-card fade-in">
-        <div class="number">1年+</div>
-        <div class="label">行业深耕</div>
+        <div class="number">99.9%</div>
+        <div class="label">客户满意度</div>
       </div>
       <div class="stat-card fade-in">
         <div class="number">7x24</div>
         <div class="label">技术支持</div>
       </div>
       <div class="stat-card fade-in">
-        <div class="number">99.9%</div>
-        <div class="label">客户满意度</div>
+        <div class="number">1-8卡</div>
+        <div class="label">灵活配置</div>
       </div>
     </div>
   </div>
@@ -692,13 +761,15 @@ footer .footer-links a:hover { color: var(--primary); }
 <section id="products" aria-label="产品服务">
   <div class="container">
     <div class="section-title fade-in">
+      <span class="sec-tag">02 // PRODUCTS</span>
       <h2>产品服务</h2>
       <p>从单卡到多卡集群，满足各种 AI 算力需求</p>
-      <div class="line"></div>
     </div>
     <div class="product-grid">
       <article class="product-card fade-in">
-        <div class="product-icon" role="img" aria-label="V100服务器">🖥️</div>
+        <div class="prod-icon" role="img" aria-label="V100服务器">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="8" rx="1"/><rect x="2" y="13" width="20" height="8" rx="1"/><line x1="6" y1="7" x2="6.01" y2="7"/><line x1="6" y1="17" x2="6.01" y2="17"/><line x1="10" y1="7" x2="18" y2="7"/><line x1="10" y1="17" x2="18" y2="17"/></svg>
+        </div>
         <div class="product-info">
           <h3>V100 单卡/双卡服务器</h3>
           <p>性价比之选，适合中小模型推理和训练。支持 NVLink 互联，显存灵活配置。</p>
@@ -710,7 +781,9 @@ footer .footer-links a:hover { color: var(--primary); }
         </div>
       </article>
       <article class="product-card fade-in">
-        <div class="product-icon" role="img" aria-label="A100服务器">⚡</div>
+        <div class="prod-icon" role="img" aria-label="A100服务器">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
         <div class="product-info">
           <h3>A100 多卡服务器</h3>
           <p>旗舰级 AI 算力，支持 4-8 卡配置。80G HBM2e 显存，大模型训练首选。</p>
@@ -722,7 +795,9 @@ footer .footer-links a:hover { color: var(--primary); }
         </div>
       </article>
       <article class="product-card fade-in">
-        <div class="product-icon" role="img" aria-label="本地大模型部署">🤖</div>
+        <div class="prod-icon" role="img" aria-label="本地大模型部署">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/><line x1="9" y1="17" x2="15" y2="17"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/></svg>
+        </div>
         <div class="product-info">
           <h3>本地大模型部署</h3>
           <p>从选型到部署一站式服务。支持 LLaMA、Qwen、DeepSeek 等主流模型私有化部署。</p>
@@ -734,7 +809,9 @@ footer .footer-links a:hover { color: var(--primary); }
         </div>
       </article>
       <article class="product-card fade-in highlight">
-        <div class="product-icon" role="img" aria-label="Dell R730服务器">🏢</div>
+        <div class="prod-icon" role="img" aria-label="Dell R730服务器">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="18" height="20" rx="1"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/><circle cx="16" cy="14" r="2"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+        </div>
         <div class="product-info">
           <h3>Dell R730 双卡 V100</h3>
           <p>企业级双路机架式服务器，2路 Intel Xeon E5-2690 v4，双 NVIDIA V100 GPU，72GB ECC 内存，8盘位。适合入门 AI 推理和训练。</p>
@@ -747,7 +824,9 @@ footer .footer-links a:hover { color: var(--primary); }
         </div>
       </article>
       <article class="product-card fade-in">
-        <div class="product-icon" role="img" aria-label="可运行的主流模型">🧠</div>
+        <div class="prod-icon" role="img" aria-label="可运行的主流模型">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="10" y="10" width="4" height="4"/><line x1="9" y1="2" x2="9" y2="5"/><line x1="15" y1="2" x2="15" y2="5"/><line x1="9" y1="19" x2="9" y2="22"/><line x1="15" y1="19" x2="15" y2="22"/><line x1="19" y1="9" x2="22" y2="9"/><line x1="19" y1="15" x2="22" y2="15"/><line x1="2" y1="9" x2="5" y2="9"/><line x1="2" y1="15" x2="5" y2="15"/></svg>
+        </div>
         <div class="product-info">
           <h3>可运行的主流模型</h3>
           <p>支持 Qwen 系列、DeepSeek、GLM、Llama 3、Stable Diffusion 等主流模型。V100 双卡可跑 70B 量化模型，8 卡可跑 72B FP16。</p>
@@ -768,33 +847,43 @@ footer .footer-links a:hover { color: var(--primary); }
 <section id="advantages" aria-label="核心优势">
   <div class="container">
     <div class="section-title fade-in">
+      <span class="sec-tag">03 // ADVANTAGES</span>
       <h2>核心优势</h2>
       <p>为什么选择积电汇芯</p>
-      <div class="line"></div>
     </div>
     <div class="adv-grid">
       <div class="adv-card fade-in">
-        <div class="icon" role="img" aria-label="数据安全">🔒</div>
+        <div class="adv-icon" role="img" aria-label="数据安全">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
         <h3>数据安全</h3>
         <p>本地部署，数据完全在您的掌控之中。不依赖第三方云服务，敏感信息永不外泄。</p>
       </div>
       <div class="adv-card fade-in">
-        <div class="icon" role="img" aria-label="灵活配置">⚙️</div>
+        <div class="adv-icon" role="img" aria-label="灵活配置">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+        </div>
         <h3>灵活配置</h3>
         <p>1-8 卡自由组合，从入门到旗舰。根据预算和需求精准匹配最佳配置方案。</p>
       </div>
       <div class="adv-card fade-in">
-        <div class="icon" role="img" aria-label="专业团队">👨‍💻</div>
+        <div class="adv-icon" role="img" aria-label="专业团队">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
         <h3>专业团队</h3>
         <p>深耕 AI 硬件领域，从选型、组装、调试到部署，全程专业技术支持。服务 300+ 客户。</p>
       </div>
       <div class="adv-card fade-in">
-        <div class="icon" role="img" aria-label="全天候售后">🕐</div>
+        <div class="adv-icon" role="img" aria-label="全天候售后">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
         <h3>7x24 小时售后</h3>
         <p>全年无休技术支持。远程调试、现场维修，确保您的算力随时在线。</p>
       </div>
       <div class="adv-card fade-in">
-        <div class="icon" role="img" aria-label="极致性价比">💰</div>
+        <div class="adv-icon" role="img" aria-label="极致性价比">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+        </div>
         <h3>极致性价比</h3>
         <p>二手 V100/A100 显卡，性能稳定，价格仅为新品的 30%-50%。ECC 零错误，压力测试过关。</p>
       </div>
@@ -806,22 +895,34 @@ footer .footer-links a:hover { color: var(--primary); }
 <section id="gallery" aria-label="产品实拍">
   <div class="container">
     <div class="section-title fade-in">
+      <span class="sec-tag">04 // GALLERY</span>
       <h2>产品实拍</h2>
       <p>真实产品，看得见的品质</p>
-      <div class="line"></div>
     </div>
     <div class="gallery-grid">
       <div class="gallery-item fade-in" onclick="openLightbox(0)" role="button" tabindex="0" aria-label="查看 V100 双卡服务器大图" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(0);}">
-        <div class="gallery-thumb"><span class="thumb-emoji">🖥️</span><span class="gallery-label">V100 双卡服务器</span></div>
+        <div class="gallery-thumb">
+          <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="8" rx="1"/><rect x="2" y="13" width="20" height="8" rx="1"/><line x1="6" y1="7" x2="6.01" y2="7"/><line x1="6" y1="17" x2="6.01" y2="17"/></svg></span>
+          <span class="gallery-label">V100 双卡服务器</span>
+        </div>
       </div>
       <div class="gallery-item fade-in" onclick="openLightbox(1)" role="button" tabindex="0" aria-label="查看 A100 8卡服务器大图" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(1);}">
-        <div class="gallery-thumb"><span class="thumb-emoji">⚡</span><span class="gallery-label">A100 8卡服务器</span></div>
+        <div class="gallery-thumb">
+          <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+          <span class="gallery-label">A100 8卡服务器</span>
+        </div>
       </div>
       <div class="gallery-item fade-in" onclick="openLightbox(2)" role="button" tabindex="0" aria-label="查看服务器集群大图" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(2);}">
-        <div class="gallery-thumb"><span class="thumb-emoji">🏭</span><span class="gallery-label">服务器集群</span></div>
+        <div class="gallery-thumb">
+          <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg></span>
+          <span class="gallery-label">服务器集群</span>
+        </div>
       </div>
       <div class="gallery-item fade-in" onclick="openLightbox(3)" role="button" tabindex="0" aria-label="查看组装调试大图" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(3);}">
-        <div class="gallery-thumb"><span class="thumb-emoji">🔧</span><span class="gallery-label">组装调试</span></div>
+        <div class="gallery-thumb">
+          <span class="g-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+          <span class="gallery-label">组装调试</span>
+        </div>
       </div>
     </div>
   </div>
@@ -831,16 +932,16 @@ footer .footer-links a:hover { color: var(--primary); }
 <section id="brand-video" aria-label="品牌宣传片">
   <div class="container">
     <div class="section-title fade-in">
+      <span class="sec-tag">05 // BRAND FILM</span>
       <h2>品牌宣传片</h2>
       <p>水冷，让 AI 算力安静地属于你</p>
-      <div class="line"></div>
     </div>
     <div class="video-frame fade-in">
       <video controls preload="none" poster="assets/img/品牌宣传片_封面.webp" width="960" height="540" data-src="assets/video/brand-film.mp4" aria-label="品牌宣传片《静默的算力》">
         <p>您的浏览器不支持视频播放，请<a href="assets/video/brand-film.mp4">下载观看品牌宣传片《静默的算力》</a>。</p>
       </video>
     </div>
-    <p class="video-caption">78 秒 · 1080P · V100 水冷 AI 服务器实拍与三维演示</p>
+    <p class="video-caption">78 SEC · 1080P · V100 水冷 AI 服务器实拍与三维演示</p>
   </div>
 </section>
 
@@ -848,37 +949,45 @@ footer .footer-links a:hover { color: var(--primary); }
 <section id="contact" aria-label="联系我们">
   <div class="container">
     <div class="section-title fade-in">
+      <span class="sec-tag">06 // CONTACT</span>
       <h2>联系我们</h2>
       <p>期待与您合作</p>
-      <div class="line"></div>
     </div>
     <div class="contact-wrapper">
       <div class="contact-info fade-in">
         <div class="contact-item">
-          <div class="icon" role="img" aria-label="地址">📍</div>
+          <div class="icon" role="img" aria-label="地址">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
           <div class="text">
-            <h4>地址</h4>
+            <h4>ADDRESS</h4>
             <p>成都市武侯区晋阳路432号1栋E馆3楼329室</p>
           </div>
         </div>
         <div class="contact-item">
-          <div class="icon" role="img" aria-label="电话">📞</div>
+          <div class="icon" role="img" aria-label="电话">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
           <div class="text">
-            <h4>电话</h4>
+            <h4>TEL</h4>
             <p><a href="tel:+8618683421636">186-8342-1636</a></p>
           </div>
         </div>
         <div class="contact-item">
-          <div class="icon" role="img" aria-label="微信">💬</div>
+          <div class="icon" role="img" aria-label="微信">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
           <div class="text">
-            <h4>微信</h4>
+            <h4>WECHAT</h4>
             <p>18683421636（微信同号）</p>
           </div>
         </div>
         <div class="contact-item">
-          <div class="icon" role="img" aria-label="邮箱">📧</div>
+          <div class="icon" role="img" aria-label="邮箱">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
           <div class="text">
-            <h4>邮箱</h4>
+            <h4>EMAIL</h4>
             <p><a href="mailto:327585419@qq.com">327585419@qq.com</a></p>
           </div>
         </div>
@@ -915,7 +1024,7 @@ footer .footer-links a:hover { color: var(--primary); }
     <a href="#products">产品服务</a>
     <a href="#contact">联系我们</a>
   </div>
-  <p>&copy; 2026 四川积电汇芯科技有限公司 版权所有</p>
+  <p>&copy; 2026 四川积电汇芯科技有限公司 // ALL RIGHTS RESERVED</p>
 </footer>
 
 <!-- Lightbox -->
@@ -928,81 +1037,6 @@ footer .footer-links a:hover { color: var(--primary); }
 </div>
 
 <script>
-// ============ 粒子背景（可降级） ============
-(function() {
-  const canvas = document.getElementById('particles');
-  const ctx = canvas.getContext('2d');
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced) { canvas.style.display = 'none'; return; }
-
-  let particles = [];
-  const isMobile = window.innerWidth < 768;
-  const COUNT = isMobile ? 25 : 80; // 移动端降级
-
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', () => {
-    const wasMobile = isMobile;
-    resize();
-    if (window.innerWidth < 768 !== wasMobile) {
-      // 重新初始化粒子数量
-      particles = [];
-      const n = window.innerWidth < 768 ? 25 : 80;
-      for (let i = 0; i < n; i++) particles.push(new Particle());
-    }
-  });
-  resize();
-
-  class Particle {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.vx = (Math.random() - 0.5) * 0.5;
-      this.vy = (Math.random() - 0.5) * 0.5;
-      this.radius = Math.random() * 2 + 0.5;
-      this.alpha = Math.random() * 0.5 + 0.1;
-    }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(6,182,212,' + this.alpha + ')';
-      ctx.fill();
-    }
-  }
-
-  for (let i = 0; i < COUNT; i++) particles.push(new Particle());
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => { p.update(); p.draw(); });
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = 'rgba(6,182,212,' + (0.08 * (1 - dist / 120)) + ')';
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(animate);
-  }
-  animate();
-})();
-
 // ============ 导航滚动状态 ============
 const navbar = document.getElementById('navbar');
 const sections = document.querySelectorAll('section[id]');
@@ -1077,10 +1111,22 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
 // ============ Lightbox ============
 const galleryItems = [
-  { emoji: '🖥️', label: 'V100 双卡服务器' },
-  { emoji: '⚡', label: 'A100 8卡服务器' },
-  { emoji: '🏭', label: '服务器集群' },
-  { emoji: '🔧', label: '组装调试' }
+  {
+    label: 'V100 双卡服务器',
+    svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="8" rx="1"/><rect x="2" y="13" width="20" height="8" rx="1"/><line x1="6" y1="7" x2="6.01" y2="7"/><line x1="6" y1="17" x2="6.01" y2="17"/><line x1="10" y1="7" x2="18" y2="7"/><line x1="10" y1="17" x2="18" y2="17"/></svg>'
+  },
+  {
+    label: 'A100 8卡服务器',
+    svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>'
+  },
+  {
+    label: '服务器集群',
+    svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>'
+  },
+  {
+    label: '组装调试',
+    svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'
+  }
 ];
 let currentImg = 0;
 const lightbox = document.getElementById('lightbox');
@@ -1090,7 +1136,7 @@ const lightboxLabel = document.getElementById('lightbox-label');
 function openLightbox(i) {
   currentImg = i;
   lightbox.classList.add('open');
-  lightboxContent.textContent = galleryItems[i].emoji;
+  lightboxContent.innerHTML = galleryItems[i].svg;
   lightboxLabel.textContent = galleryItems[i].label;
   document.body.style.overflow = 'hidden';
 }
@@ -1124,7 +1170,6 @@ form.addEventListener('submit', (e) => {
   submitBtn.textContent = '提交中...';
   formStatus.className = 'form-status';
   formStatus.textContent = '';
-  // 让表单正常提交到 FormSubmit
   // 若网络失败，恢复按钮状态
   setTimeout(() => {
     if (!submitBtn.disabled) return;
