@@ -1,0 +1,10 @@
+# 敏感业务文件（切勿推送到公网仓库）
+content/*.md
+
+# 未优化的原始媒体（新站点使用 assets/ 下的优化版本）
+content/*.png
+content/*.mp4
+
+# 辅助脚本与临时文件
+gen_cover.py
+code_output.txt
