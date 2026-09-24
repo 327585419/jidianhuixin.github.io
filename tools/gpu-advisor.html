@@ -111,6 +111,18 @@
   footer{margin-top:52px;padding:26px 0 44px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);line-height:1.9}
   .artlinks{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
   .artlinks a{font-size:13.5px;text-decoration:none;border:1px solid var(--line);border-radius:50px;padding:6px 14px;background:var(--card);color:var(--primary)}
+
+  .chat{margin-top:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg-soft);padding:12px}
+  .chat-log{max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+  .chat-log:empty{display:none}
+  .msg{font-size:14.5px;line-height:1.75;padding:9px 13px;border-radius:12px;max-width:88%}
+  .msg.me{align-self:flex-end;background:linear-gradient(135deg,#0891b2,#2563eb);color:#fff}
+  .msg.ai{align-self:flex-start;background:#fff;border:1px solid var(--line);color:var(--text)}
+  .msg.ai.err{border-color:#f0b4b4;color:#b42318}
+  .msg.pending{color:var(--muted)}
+  .chat-row{display:flex;gap:8px}
+  .chat-row input{flex:1;padding:10px 14px;border:1px solid var(--line);border-radius:50px;font-family:inherit;font-size:15px}
+  .chat-row .btn{padding:10px 22px;font-size:15px;white-space:nowrap}
   @media(max-width:640px){.hnav{display:none}form.lead{grid-template-columns:1fr}header .wrap{height:56px}}
 </style>
 </head>
@@ -345,6 +357,77 @@
 
   const money = (n) => n >= 10000 ? (n / 10000).toFixed(n % 10000 === 0 ? 0 : 1) + ' 万' : n.toLocaleString('zh-CN') + ' 元';
 
+  // ---------- AI 追问（走我方网关；令牌仅限本场景；失败自动降级为电话引导）----------
+  const AI = {
+    endpoint: 'https://fever-aside-ranges-bryant.trycloudflare.com/v1/chat/completions',
+    key: 'osqmDp4oNPqL0wbFnMs5wI7J141rzjPIe14afXi3HnulXfF3',
+    model: 'deepseek-flash',
+  };
+  const SYS = '你是四川积电汇芯科技有限公司的 AI 算力选型助手，面向中国大陆客户，用简体中文回答。' +
+    '要求：直接给结论，简短专业（通常 120 字以内，必要时用短列表）；只谈 GPU 选型、显存、部署、行情与成本相关话题；' +
+    '价格给区间并说明以当日货源为准；不承诺具体性能数字；不编造数据；与主题无关的问题礼貌拒答并引导回算力选型。';
+
+  async function askAI(question, profile) {
+    const res = await fetch(AI.endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + AI.key },
+      body: JSON.stringify({
+        model: AI.model,
+        messages: [
+          { role: 'system', content: SYS + '\n用户需求画像：' + profile },
+          { role: 'user', content: question },
+        ],
+        max_tokens: 600,
+        temperature: 0.5,
+        chat_template_kwargs: { enable_thinking: false },
+      }),
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const j = await res.json();
+    return (j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content || '').trim();
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function chatHtml(profile) {
+    return '<h3 class="sec">还有疑问？直接问（AI 助手）</h3>' +
+      '<p style="font-size:14.5px;color:var(--muted);margin-bottom:10px">例如：“V100 能跑 13B 模型吗？”“这两套差了多少钱？”“后面加卡方便吗？”</p>' +
+      '<div class="chat"><div class="chat-log" id="chatLog"></div>' +
+      '<div class="chat-row"><input type="text" id="chatInput" placeholder="输入你的问题">' +
+      '<button class="btn" type="button" id="chatSend">发送</button></div></div>' +
+      '<div id="chatData" data-profile="' + esc(profile) + '"></div>';
+  }
+
+  function bindChat() {
+    const send = document.getElementById('chatSend');
+    const input = document.getElementById('chatInput');
+    const log = document.getElementById('chatLog');
+    const data = document.getElementById('chatData');
+    if (!send || !input || !log) return;
+    const profile = data ? data.getAttribute('data-profile') : '';
+
+    async function go() {
+      const q = input.value.trim();
+      if (!q) return;
+      input.value = '';
+      log.insertAdjacentHTML('beforeend', '<div class="msg me">' + esc(q) + '</div>');
+      log.insertAdjacentHTML('beforeend', '<div class="msg ai pending">思考中…</div>');
+      log.scrollTop = log.scrollHeight;
+      try {
+        const a = await askAI(q, profile);
+        log.querySelector('.pending').outerHTML = '<div class="msg ai">' + esc(a).replace(/\n/g, '<br>') + '</div>';
+      } catch (e) {
+        log.querySelector('.pending').outerHTML =
+          '<div class="msg ai err">助手暂时不可用，请直接电话/微信 <a href="tel:+8618683421636">186-8342-1636</a> 咨询。</div>';
+      }
+      log.scrollTop = log.scrollHeight;
+    }
+    send.addEventListener('click', go);
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); go(); } });
+  }
+
   function render(a, d) {
     const p = d.planObj;
     const priceTxt = money(p.price[0]) + ' ~ ' + money(p.price[1]);
@@ -381,6 +464,7 @@
         altHtml +
         '<div class="note">以上为按权重与 KV Cache 的简化估算（已含框架开销余量），未计入具体框架版本差异。' +
         '实际显存占用与吞吐需按你的模型、量化方式与框架实测确认 —— 我们可以帮你先跑一遍再决定买不买。</div>' +
+        chatHtml([LABEL.use[a.use], LABEL.model[a.model], LABEL.conc[a.conc], LABEL.ctx[a.ctx], LABEL.budget[a.budget]].join(' | ') + '；推荐方案：' + p.name) +
         '<div class="cta">' +
           '<h3>把你的需求发给我们，出一份正式配置与报价</h3>' +
           '<p>已有需求可跳过表单，直接致电 <a href="tel:+8618683421636">186-8342-1636</a>（微信同号）。</p>' +
@@ -402,6 +486,7 @@
 
     const r = document.getElementById('result');
     r.classList.add('show');
+    bindChat();
     r.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
