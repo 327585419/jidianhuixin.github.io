@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="article.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"V100 PCIe 和 SXM2 有什么区别？买错装不进机箱","description":"接口形态、散热、NVLink、主板兼容性、可维护性逐项对比，附改装与整机两条路线建议。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-pcie-vs-sxm2.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"V100 PCIe 和 SXM2 有什么区别？买错装不进机箱","item":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-pcie-vs-sxm2.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"V100 PCIe 和 SXM2 有什么区别？买错装不进机箱","description":"接口形态、散热、NVLink、主板兼容性、可维护性逐项对比，附改装与整机两条路线建议。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-pcie-vs-sxm2.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司","url":"https://327585419.github.io/jidianhuixin.github.io/"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}},"about":[{"@type":"Thing","name":"V100 PCIe SXM2 区别"},{"@type":"Thing","name":"V100 SXM2"},{"@type":"Thing","name":"V100 NVLink"}],"isPartOf":{"@type":"CollectionPage","name":"算力知识库","url":"https://327585419.github.io/jidianhuixin.github.io/articles/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"V100 PCIe 和 SXM2 有什么区别？买错装不进机箱","item":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-pcie-vs-sxm2.html"}]}]}</script>
 </head>
 <body>
 <header class="art-top">
@@ -29,6 +29,7 @@
     <nav class="art-nav">
       <a href="index.html">全部文章</a>
       <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#stock">现货价</a>
       <a href="../index.html#contact">联系我们</a>
     </nav>
   </div>
@@ -40,9 +41,10 @@
     <div class="art-meta">
       <span>发布：2026-09-24</span>
       <span>分类：选型对比</span>
-      <span>阅读约 6 分钟</span>
+      <span>阅读约 5 分钟</span>
     </div>
     <div class="art-body">
+      <p class="art-lead"><strong>结论先行：</strong>买 V100 之前，最该先确认的不是“16G 还是 32G”，而是“PCIe 还是 SXM2”。这两者虽然都叫 V100、都是 GV100 核心、都是 12nm、211 亿晶体管、CUDA 计算能力 7.0，但物理形态、供电、散热、互联完全是两条路线。买错了，轻则装不进机箱，重则整机点不亮。</p>
 <p>买 V100 之前，最该先确认的不是“16G 还是 32G”，而是“PCIe 还是 SXM2”。这两者虽然都叫 V100、都是 GV100 核心、都是 12nm、211 亿晶体管、CUDA 计算能力 7.0，但物理形态、供电、散热、互联完全是两条路线。买错了，轻则装不进机箱，重则整机点不亮。</p>
 <h2>一、物理形态：一个插槽，一个焊在板上</h2>
 <p>PCIe 版是标准双宽插卡，走 PCIe 3.0 x16，可以直接插进有 x16 插槽的服务器或工作站主板。SXM2 版是板载模块，通过 SXM2 插槽固定在专用基板上，自己单独买一张 SXM2 卡是没有意义的——它没有金手指，也没有挡板，你没法把它插进普通机箱。</p>
@@ -83,7 +85,7 @@
       <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
       <div class="btns">
         <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
-        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+        <a class="btn ghost" href="../tools/gpu-advisor.html">免费算力选型</a>
       </div>
     </aside>
 

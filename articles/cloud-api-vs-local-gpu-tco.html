@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="article.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"云 API 还是本地 GPU？18 个月总拥有成本算给你看","description":"把\"按量付费的弹性\"与\"一次性投入的确定性\"放到同一张表里算，给出回本临界点。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/cloud-api-vs-local-gpu-tco.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"云 API 还是本地 GPU？18 个月总拥有成本算给你看","item":"https://327585419.github.io/jidianhuixin.github.io/articles/cloud-api-vs-local-gpu-tco.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"云 API 还是本地 GPU？18 个月总拥有成本算给你看","description":"把\"按量付费的弹性\"与\"一次性投入的确定性\"放到同一张表里算，给出回本临界点。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/cloud-api-vs-local-gpu-tco.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司","url":"https://327585419.github.io/jidianhuixin.github.io/"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}},"about":[{"@type":"Thing","name":"云API 本地部署 成本"},{"@type":"Thing","name":"GPU 服务器 回本"},{"@type":"Thing","name":"大模型 成本对比"}],"isPartOf":{"@type":"CollectionPage","name":"算力知识库","url":"https://327585419.github.io/jidianhuixin.github.io/articles/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"云 API 还是本地 GPU？18 个月总拥有成本算给你看","item":"https://327585419.github.io/jidianhuixin.github.io/articles/cloud-api-vs-local-gpu-tco.html"}]}]}</script>
 </head>
 <body>
 <header class="art-top">
@@ -29,6 +29,7 @@
     <nav class="art-nav">
       <a href="index.html">全部文章</a>
       <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#stock">现货价</a>
       <a href="../index.html#contact">联系我们</a>
     </nav>
   </div>
@@ -40,9 +41,10 @@
     <div class="art-meta">
       <span>发布：2026-09-24</span>
       <span>分类：成本与回本</span>
-      <span>阅读约 7 分钟</span>
+      <span>阅读约 5 分钟</span>
     </div>
     <div class="art-body">
+      <p class="art-lead"><strong>结论先行：</strong>先说结论：当你的推理调用量稳定跑起来、单卡日均有效利用率能到 40% 以上时，本地 GPU 的 18 个月总拥有成本（TCO）通常明显低于云 API；但如果只是零星调用、波峰波谷差得离谱，或者团队没人能搞定驱动和推理框架，云 API 反而更省心也更省钱。关键变量不是"云贵还是本地贵"，而是"你一年到底能用掉多少 GPU 小时"。</p>
 <p>先说结论：当你的推理调用量稳定跑起来、单卡日均有效利用率能到 40% 以上时，本地 GPU 的 18 个月总拥有成本（TCO）通常明显低于云 API；但如果只是零星调用、波峰波谷差得离谱，或者团队没人能搞定驱动和推理框架，云 API 反而更省心也更省钱。关键变量不是"云贵还是本地贵"，而是"你一年到底能用掉多少 GPU 小时"。</p>
 <h2>一、把成本项算全，别只盯硬件价</h2>
 <p>很多人比价只比"一张卡多少钱 vs 云上每小时多少钱"，这必然算错。本地部署的真实成本至少有六块：</p>
@@ -92,7 +94,7 @@
       <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
       <div class="btns">
         <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
-        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+        <a class="btn ghost" href="../tools/gpu-advisor.html">免费算力选型</a>
       </div>
     </aside>
 

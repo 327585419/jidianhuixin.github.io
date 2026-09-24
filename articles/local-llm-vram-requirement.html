@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="article.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"本地部署大模型要多少显存？一份可以照着算的对照表","description":"不给玄学公式，给一张按参数量、精度、量化方式、上下文长度查的表，再教你按自己场景微调。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/local-llm-vram-requirement.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"本地部署大模型要多少显存？一份可以照着算的对照表","item":"https://327585419.github.io/jidianhuixin.github.io/articles/local-llm-vram-requirement.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"本地部署大模型要多少显存？一份可以照着算的对照表","description":"不给玄学公式，给一张按参数量、精度、量化方式、上下文长度查的表，再教你按自己场景微调。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/local-llm-vram-requirement.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司","url":"https://327585419.github.io/jidianhuixin.github.io/"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}},"about":[{"@type":"Thing","name":"大模型显存需求"},{"@type":"Thing","name":"本地部署 显存计算"},{"@type":"Thing","name":"7B 14B 32B 70B 显存"}],"isPartOf":{"@type":"CollectionPage","name":"算力知识库","url":"https://327585419.github.io/jidianhuixin.github.io/articles/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"本地部署大模型要多少显存？一份可以照着算的对照表","item":"https://327585419.github.io/jidianhuixin.github.io/articles/local-llm-vram-requirement.html"}]}]}</script>
 </head>
 <body>
 <header class="art-top">
@@ -29,6 +29,7 @@
     <nav class="art-nav">
       <a href="index.html">全部文章</a>
       <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#stock">现货价</a>
       <a href="../index.html#contact">联系我们</a>
     </nav>
   </div>
@@ -40,9 +41,10 @@
     <div class="art-meta">
       <span>发布：2026-09-24</span>
       <span>分类：部署实操</span>
-      <span>阅读约 7 分钟</span>
+      <span>阅读约 5 分钟</span>
     </div>
     <div class="art-body">
+      <p class="art-lead"><strong>结论先行：</strong>大模型显存占用，核心就三块：权重 + KV Cache + 运行时开销。先看权重这张表，按“参数量 × 每参数字节数”估算，已包含约 10% 冗余。</p>
 <h2>先给结论：一张能照着算的显存对照表</h2>
 <p>大模型显存占用，核心就三块：<strong>权重 + KV Cache + 运行时开销</strong>。先看权重这张表，按“参数量 × 每参数字节数”估算，已包含约 10% 冗余。</p>
 <table><thead><tr><th>模型规模</th><th>FP16（2 字节）</th><th>INT8（1 字节）</th><th>INT4（0.5 字节）</th></tr></thead><tbody><tr><td>7B</td><td>约 15~16 GB</td><td>约 8~9 GB</td><td>约 5~6 GB</td></tr><tr><td>14B</td><td>约 30~32 GB</td><td>约 16~17 GB</td><td>约 9~10 GB</td></tr><tr><td>32B</td><td>约 68~72 GB</td><td>约 36~38 GB</td><td>约 20~22 GB</td></tr><tr><td>70B</td><td>约 150~158 GB</td><td>约 78~82 GB</td><td>约 42~45 GB</td></tr></tbody></table>
@@ -80,7 +82,7 @@
       <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
       <div class="btns">
         <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
-        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+        <a class="btn ghost" href="../tools/gpu-advisor.html">免费算力选型</a>
       </div>
     </aside>
 

@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="article.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"高校实验室 AI 教学算力怎么配？预算有限时的最优解","description":"针对高校与科研场景：多人共享、课程实验、论文复现三类需求怎么用有限预算同时满足。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/ai-teaching-lab-gpu.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"高校实验室 AI 教学算力怎么配？预算有限时的最优解","item":"https://327585419.github.io/jidianhuixin.github.io/articles/ai-teaching-lab-gpu.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"高校实验室 AI 教学算力怎么配？预算有限时的最优解","description":"针对高校与科研场景：多人共享、课程实验、论文复现三类需求怎么用有限预算同时满足。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/ai-teaching-lab-gpu.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司","url":"https://327585419.github.io/jidianhuixin.github.io/"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}},"about":[{"@type":"Thing","name":"高校 实验室 算力"},{"@type":"Thing","name":"教学 GPU 服务器"},{"@type":"Thing","name":"实验室 大模型 平台"}],"isPartOf":{"@type":"CollectionPage","name":"算力知识库","url":"https://327585419.github.io/jidianhuixin.github.io/articles/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"高校实验室 AI 教学算力怎么配？预算有限时的最优解","item":"https://327585419.github.io/jidianhuixin.github.io/articles/ai-teaching-lab-gpu.html"}]}]}</script>
 </head>
 <body>
 <header class="art-top">
@@ -29,6 +29,7 @@
     <nav class="art-nav">
       <a href="index.html">全部文章</a>
       <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#stock">现货价</a>
       <a href="../index.html#contact">联系我们</a>
     </nav>
   </div>
@@ -40,9 +41,10 @@
     <div class="art-meta">
       <span>发布：2026-09-24</span>
       <span>分类：选型对比</span>
-      <span>阅读约 5 分钟</span>
+      <span>阅读约 4 分钟</span>
     </div>
     <div class="art-body">
+      <p class="art-lead"><strong>结论先行：</strong>高校实验室配 AI 算力，最容易踩的坑是“一刀切”：要么拿教学经费买几台游戏本凑合，要么照着论文里的 8 卡 A100 抄配置，结果钱花完了，学生连环境都装不上。先把需求拆开，再谈硬件，才能把钱花在刀刃上。</p>
 <p>高校实验室配 AI 算力，最容易踩的坑是“一刀切”：要么拿教学经费买几台游戏本凑合，要么照着论文里的 8 卡 A100 抄配置，结果钱花完了，学生连环境都装不上。先把需求拆开，再谈硬件，才能把钱花在刀刃上。</p>
 <h2>一、先分清三类需求，硬件差别很大</h2>
 <table><thead><tr><th>需求类型</th><th>典型任务</th><th>显存敏感度</th><th>关键硬件</th></tr></thead><tbody><tr><td>课程实验</td><td>图像分类、NLP 基础、小模型训练</td><td>低</td><td>单卡 16GB 起，能跑通即可</td></tr><tr><td>科研训练</td><td>中等规模微调、多模态小实验</td><td>中</td><td>32GB 显存、多卡并行</td></tr><tr><td>模型复现</td><td>大模型推理、论文复现</td><td>高</td><td>大显存、NVLink、ECC</td></tr></tbody></table>
@@ -73,7 +75,7 @@
       <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
       <div class="btns">
         <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
-        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+        <a class="btn ghost" href="../tools/gpu-advisor.html">免费算力选型</a>
       </div>
     </aside>
 

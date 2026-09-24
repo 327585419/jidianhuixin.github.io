@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="article.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"V100 和 A100 怎么选？一张决策表说清差价到底买到了什么","description":"从显存带宽、精度支持、互联、能效到二手价格，给出按场景的明确推荐，不做和稀泥的对比。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-vs-a100.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"V100 和 A100 怎么选？一张决策表说清差价到底买到了什么","item":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-vs-a100.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"V100 和 A100 怎么选？一张决策表说清差价到底买到了什么","description":"从显存带宽、精度支持、互联、能效到二手价格，给出按场景的明确推荐，不做和稀泥的对比。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-vs-a100.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司","url":"https://327585419.github.io/jidianhuixin.github.io/"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}},"about":[{"@type":"Thing","name":"V100 A100 对比"},{"@type":"Thing","name":"V100 和 A100 选哪个"},{"@type":"Thing","name":"A100 40G 80G"}],"isPartOf":{"@type":"CollectionPage","name":"算力知识库","url":"https://327585419.github.io/jidianhuixin.github.io/articles/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"V100 和 A100 怎么选？一张决策表说清差价到底买到了什么","item":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-vs-a100.html"}]}]}</script>
 </head>
 <body>
 <header class="art-top">
@@ -29,6 +29,7 @@
     <nav class="art-nav">
       <a href="index.html">全部文章</a>
       <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#stock">现货价</a>
       <a href="../index.html#contact">联系我们</a>
     </nav>
   </div>
@@ -40,9 +41,10 @@
     <div class="art-meta">
       <span>发布：2026-09-24</span>
       <span>分类：选型对比</span>
-      <span>阅读约 5 分钟</span>
+      <span>阅读约 4 分钟</span>
     </div>
     <div class="art-body">
+      <p class="art-lead"><strong>结论先行：</strong>买 V100 还是 A100，本质不是“新旧”之争，而是“带宽、精度、显存上限”这三件事值不值那个差价。下面用一张决策表先把结论说死，再拆开讲差价买到了什么。</p>
 <p>买 V100 还是 A100，本质不是“新旧”之争，而是“带宽、精度、显存上限”这三件事值不值那个差价。下面用一张决策表先把结论说死，再拆开讲差价买到了什么。</p>
 <h2>一、先给结论：按预算和任务对号入座</h2>
 <table><thead><tr><th>你的情况</th><th>推荐</th><th>理由</th></tr></thead><tbody><tr><td>预算 1~2 万，做 7B 以下推理、教学演示</td><td>V100 32G 整机</td><td>显存够、生态仍可用，投入最低</td></tr><tr><td>预算 2~4 万，做 13B~32B 量化推理、LoRA 微调</td><td>V100 32G 多卡 或 直接上 A100 40G</td><td>看并发量，带宽敏感就偏 A100</td></tr><tr><td>做全参微调、长上下文训练</td><td>A100 80G SXM4</td><td>带宽和显存是硬门槛，V100 会卡死</td></tr><tr><td>多租户平台、要切分给多人用</td><td>A100（MIG）</td><td>V100 无 MIG，只能整卡分配</td></tr><tr><td>只跑单机小模型、追求单卡性价比</td><td>RTX 4090</td><td>24G 显存是天花板，无 NVLink</td></tr><tr><td>想先低成本试水、后面再升级</td><td>先租后买 / 月付整卡</td><td>租金抵货款，避免一次性砸钱</td></tr></tbody></table>
@@ -73,7 +75,7 @@
       <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
       <div class="btns">
         <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
-        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+        <a class="btn ghost" href="../tools/gpu-advisor.html">免费算力选型</a>
       </div>
     </aside>
 

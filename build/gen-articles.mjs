@@ -166,6 +166,22 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, 
 
 // ---------- 页面模板 ----------
 function page(item, html, excerpt, idx) {
+  // 结论块（GEO 关键）：AI 生成式引擎倾向引用「开头 40~120 字直接给答案」的段落。
+  // 规则：取正文首段；若首段太长（>170字）或太短（<30字），改用 summary 精简句。
+  let leadText = '';
+  const firstP = html.match(/<p>([\s\S]*?)<\/p>/);
+  if (firstP) {
+    const plainFirst = firstP[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+    if (plainFirst.length >= 30 && plainFirst.length <= 170) leadText = plainFirst;
+  }
+  if (!leadText) {
+    const s = (item.summary || excerpt || '').replace(/\s+/g, ' ').trim();
+    leadText = s.length > 160 ? s.slice(0, 158) + '…' : s;
+  }
+  const leadBlock = leadText
+    ? `      <p class="art-lead" style="font-size:17px;color:var(--ink-2);background:var(--brand-grad-soft,var(--bg-soft));border-left:3px solid var(--primary);border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:26px"><strong>结论先行：</strong>${leadText}</p>\n`
+    : '';
+  const bodyHtml = html;
   const url = `${SITE_URL}/articles/${item.slug}.html`;
   const prev = MANIFEST[idx - 1];
   const next = MANIFEST[idx + 1];
@@ -239,7 +255,8 @@ function page(item, html, excerpt, idx) {
       <span>阅读约 ${Math.max(3, Math.round(plain(html).length / 400))} 分钟</span>
     </div>
     <div class="art-body">
-${html}
+${leadBlock}
+${bodyHtml}
     </div>
 
     <aside class="art-cta">

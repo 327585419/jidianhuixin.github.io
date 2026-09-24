@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="article.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"买二手 GPU 服务器怎么验货？一份 30 项现场检查清单","description":"从机身序列号、GPU 健康、显存与 ECC、电源冗余到压力测试，逐项给判断标准。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/used-gpu-server-checklist.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"买二手 GPU 服务器怎么验货？一份 30 项现场检查清单","item":"https://327585419.github.io/jidianhuixin.github.io/articles/used-gpu-server-checklist.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"买二手 GPU 服务器怎么验货？一份 30 项现场检查清单","description":"从机身序列号、GPU 健康、显存与 ECC、电源冗余到压力测试，逐项给判断标准。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/used-gpu-server-checklist.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司","url":"https://327585419.github.io/jidianhuixin.github.io/"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}},"about":[{"@type":"Thing","name":"二手GPU服务器 验货"},{"@type":"Thing","name":"二手服务器 检查"},{"@type":"Thing","name":"GPU 二手 避坑"}],"isPartOf":{"@type":"CollectionPage","name":"算力知识库","url":"https://327585419.github.io/jidianhuixin.github.io/articles/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"买二手 GPU 服务器怎么验货？一份 30 项现场检查清单","item":"https://327585419.github.io/jidianhuixin.github.io/articles/used-gpu-server-checklist.html"}]}]}</script>
 </head>
 <body>
 <header class="art-top">
@@ -29,6 +29,7 @@
     <nav class="art-nav">
       <a href="index.html">全部文章</a>
       <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#stock">现货价</a>
       <a href="../index.html#contact">联系我们</a>
     </nav>
   </div>
@@ -40,9 +41,10 @@
     <div class="art-meta">
       <span>发布：2026-09-24</span>
       <span>分类：行情与价格</span>
-      <span>阅读约 9 分钟</span>
+      <span>阅读约 7 分钟</span>
     </div>
     <div class="art-body">
+      <p class="art-lead"><strong>结论先行：</strong>从机身序列号、GPU 健康、显存与 ECC、电源冗余到压力测试，逐项给判断标准。</p>
 <p>二手 GPU 服务器不是普通二手电脑，它更像一台“已经跑过几年重活的工程设备”。验货的核心逻辑只有一句话：<strong>先看不可逆的，再看可修复的</strong>。外壳划痕、缺导轨、少螺丝都能补；显存颗粒老化、ECC 错误累积、主板烧蚀、NVLink 链路损坏，基本等于判死刑或大修。所以现场顺序应该是：外观与配置核对 → 通电看识别 → 查错误计数 → 显存与链路测试 → 压力与温度 → 电源/背板/风扇 → 交易留证。下面这份 30 项清单，按这个顺序展开。</p>
 <h2>一、先看“不可逆”的：外观、配置与身份核对</h2>
 <ol>
@@ -95,7 +97,7 @@
       <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
       <div class="btns">
         <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
-        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+        <a class="btn ghost" href="../tools/gpu-advisor.html">免费算力选型</a>
       </div>
     </aside>
 

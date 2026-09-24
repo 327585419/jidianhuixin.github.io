@@ -55,6 +55,9 @@
   },
   "telephone": "+86-186-8342-1636",
   "email": "327585419@qq.com",
+  "foundingLocation": { "@type": "Place", "name": "四川省成都市" },
+  "knowsAbout": ["Tesla V100 GPU", "NVIDIA A100 GPU", "GPU 服务器整机", "本地大模型私有化部署", "vLLM 推理部署", "二手显卡检测与验机"],
+  "slogan": "让每家企业用自己的算力，跑自己的大模型",
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "+86-186-8342-1636",
@@ -912,6 +915,24 @@ footer p {
 }
 
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "二手 Tesla V100 32G 显卡现在多少钱？",
+      "acceptedAnswer": { "@type": "Answer", "text": "截至 2026 年，SXM2 拆机卡约 3000~6000 元，PCIe 版约 6000~9000 元，含 V100 32G 的整机（九成新）约 1.8 万~2.3 万元。具体随成色、批次与货源浮动。" } },
+    { "@type": "Question", "name": "V100 和 A100 应该怎么选？",
+      "acceptedAnswer": { "@type": "Answer", "text": "看三个硬指标：带宽、精度支持、显存上限。V100 带宽约 900GB/s 且不支持 BF16；A100 带宽 1555~2039GB/s，支持 BF16 与 MIG 多实例。只做 7B~14B 推理或 LoRA 微调，V100 32G 够用且成本低；要做 13B 以上全参微调、长上下文或多租户，选 A100。" } },
+    { "@type": "Question", "name": "买二手 GPU 显卡怎么避免买到矿卡或翻新卡？",
+      "acceptedAnswer": { "@type": "Answer", "text": "重点看三项：显存测试有无报错、ECC 计数是否为零、压力测试下的温度与降频情况。建议当面验机或要求提供测试结论。成都地区可面交验机。" } },
+    { "@type": "Question", "name": "本地部署大模型比用云 API 省钱吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "取决于调用量。调用量稳定且能跑满时，自建通常在 1~2 年内收回成本；用量小或波峰波谷明显的场景，云 API 更划算。金融、医疗、政企等数据合规要求高的行业，往往不是成本问题而是数据不能出内网。" } },
+    { "@type": "Question", "name": "买之前能先测试模型能不能跑吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "可以。提供远程实测：把模型名称与用途发来，先跑显存占用与推理速度，确认能跑通再决定采购。" } }
+  ]
+}
+</script>
 </head>
 <body>
 
