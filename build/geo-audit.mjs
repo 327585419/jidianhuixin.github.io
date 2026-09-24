@@ -87,8 +87,11 @@ const arts = fs.readdirSync(artDir).filter((f) => f.endsWith('.html') && f !== '
 let withLead = 0;
 for (const f of arts) {
   const h = fs.readFileSync(path.join(artDir, f), 'utf8');
-  const m = h.match(/<div class="art-body">\s*([\s\S]{0,600}?)<\//);
-  const text = m ? m[1].replace(/<[^>]+>/g, '').trim() : '';
+  // 认两种写法：显式结论块（art-lead）或正文首段足够精炼
+  const lead = h.match(/<p class="art-lead"[^>]*>([\s\S]*?)<\/p>/);
+  const firstP = h.match(/<div class="art-body">\s*<p[^>]*>([\s\S]*?)<\/p>/);
+  const pick = lead ? lead[1] : (firstP ? firstP[1] : '');
+  const text = pick.replace(/<[^>]+>/g, '').replace(/^结论先行：/, '').trim();
   if (text.length >= 40 && text.length <= 260) withLead++;
 }
 const ratio = arts.length ? Math.round((withLead / arts.length) * 100) : 0;
