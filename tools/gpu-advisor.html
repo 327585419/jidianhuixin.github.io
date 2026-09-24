@@ -234,86 +234,113 @@
   };
 
   // ---------- 推荐配置表 ----------
+  // tier: 升配顺序（越大越强）｜vramNum: 可用显存总量(GB)｜bf16: 是否支持 BF16 训练
   const PLANS = {
-    v100_1:  { name: 'V100 32G 单卡工作站', gpu: '1 × V100 32G', price: [5000, 12000], vram: '32GB', fit: '入门推理、个人开发、单模型服务' },
-    v100_2:  { name: 'V100 32G 双卡服务器', gpu: '2 × V100 32G (NVLink)', price: [18000, 32000], vram: '64GB', fit: '中等模型推理、LoRA 微调、小团队共享' },
-    v100_4:  { name: 'V100 32G 4 卡服务器', gpu: '4 × V100 32G', price: [36000, 68000], vram: '128GB', fit: '多并发推理、32B 级模型、教学平台' },
-    a100_1:  { name: 'A100 40G 单卡', gpu: '1 × A100 40G', price: [45000, 80000], vram: '40GB', fit: '大模型推理、要求 BF16 的训练' },
-    a100_4:  { name: 'A100 40G/80G 4 卡服务器', gpu: '4 × A100 40G/80G', price: [180000, 420000], vram: '160GB / 320GB', fit: '大模型全参微调、对外高性能服务' },
-    a100_8:  { name: 'A100 80G 8 卡服务器', gpu: '8 × A100 80G', price: [450000, 900000], vram: '640GB', fit: '70B 全参训练、企业级推理集群' },
-    mix:     { name: 'V100 + A100 混合方案', gpu: '例如 2×V100 32G + 1×A100 40G', price: [60000, 140000], vram: '104GB', fit: '既要跑存量模型又要上大模型，分档承载' }
+    v100_1:  { name: 'V100 32G 单卡工作站', gpu: '1 × V100 32G', price: [5000, 12000], vram: '32GB', vramNum: 32, cards: 1, tier: 1, bf16: false, fit: '入门推理、个人开发、单模型服务' },
+    v100_2:  { name: 'V100 32G 双卡服务器', gpu: '2 × V100 32G (NVLink)', price: [18000, 32000], vram: '64GB', vramNum: 64, cards: 2, tier: 2, bf16: false, fit: '中等模型推理、LoRA 微调、小团队共享' },
+    v100_4:  { name: 'V100 32G 4 卡服务器', gpu: '4 × V100 32G', price: [36000, 68000], vram: '128GB', vramNum: 128, cards: 4, tier: 3, bf16: false, fit: '多并发推理、32B 级模型推理、教学平台' },
+    mix:     { name: 'V100 + A100 混合方案', gpu: '例如 2×V100 32G + 1×A100 40G', price: [60000, 140000], vram: '104GB', vramNum: 104, cards: 3, tier: 4, bf16: true, fit: '既要跑存量模型又要上大模型，分档承载' },
+    a100_1:  { name: 'A100 40G 单卡', gpu: '1 × A100 40G', price: [45000, 80000], vram: '40GB', vramNum: 40, cards: 1, tier: 4, bf16: true, fit: '大模型推理、要求 BF16 的训练' },
+    a100_4:  { name: 'A100 40G/80G 4 卡服务器', gpu: '4 × A100 40G/80G', price: [180000, 420000], vram: '160GB / 320GB', vramNum: 160, cards: 4, tier: 5, bf16: true, fit: '大模型全参微调、对外高性能服务' },
+    a100_8:  { name: 'A100 80G 8 卡服务器', gpu: '8 × A100 80G', price: [450000, 900000], vram: '640GB', vramNum: 640, cards: 8, tier: 6, bf16: true, fit: '70B 全参训练、企业级推理集群' }
   };
 
+  const ORDER = ['v100_1', 'v100_2', 'v100_4', 'mix', 'a100_1', 'a100_4', 'a100_8'];
+  const CAP = { low: 12000, mid: 33000, high: 105000, top: Infinity };
+
   function decide(a) {
-    const need = (cfg) => WEIGHT[a.model][cfg] + KV[a.ctx] * (a.conc === 'many' ? 4 : a.conc === 'few' ? 2 : 1);
-    const byQ4 = need('int4'), byQ8 = need('int8'), byFp16 = need('fp16');
-    const many = a.conc === 'many', team = a.conc === 'few';
+    const many = a.conc === 'many';
+    const lanes = many ? 4 : a.conc === 'few' ? 2 : 1;
+    const kv = KV[a.ctx] * lanes;
+    const isTrain = a.use === 'train';
     const reasons = [];
-    let plan, alt = null;
 
-    // 训练类需求优先按显存与精度给结论
-    if (a.use === 'train' || a.model === 'xlarge') {
-      if (a.model === 'xlarge' || a.budget === 'top') {
-        plan = 'a100_8';
-        reasons.push('全参微调 / 70B 级模型的显存需求（FP16 约 ' + Math.round(byFp16) + 'GB）远超单机消费卡能力，必须靠多卡并行。');
-        reasons.push('A100 支持 BF16，与社区训练脚本默认配置一致，不必像 V100 那样改回 FP16 并处理数值溢出。');
+    // 显存需求：权重 + KV Cache；训练再加一份梯度/优化器/激活开销
+    const need = (cfg) => WEIGHT[a.model][cfg] + kv + (isTrain ? WEIGHT[a.model][cfg] * 0.8 : 0);
+    const needFp16 = need('fp16');
+    const needInt8 = need('int8');
+    const needQ4 = need('int4');
+    // 训练对数值稳定性敏感，量化收益小，按 FP16 口径；推理可量化
+    const inferred = isTrain ? needFp16 : needInt8;
+
+    // 1) 硬约束一：显存装得下
+    const fitsVram = (k) => PLANS[k].vramNum >= inferred;
+    // 2) 硬约束二：并发能力够（每卡可稳定服务 2 路并发）
+    const fitsLanes = (k) => PLANS[k].cards * 2 >= lanes;
+    const capable = ORDER.filter((k) => fitsVram(k) && fitsLanes(k));
+
+    if (!capable.length) {
+      if (!ORDER.some(fitsVram)) {
+        reasons.push('按当前需求（' + LABEL.model[a.model] + '、' + LABEL.ctx[a.ctx] + '、' + LABEL.conc[a.conc] +
+          '），显存需求约 ' + Math.round(inferred) + 'GB（' + (isTrain ? 'FP16 训练口径' : 'INT8 量化推理口径') +
+          '），已超出我们常规现货配置的上限。');
+        reasons.push('这种情况通常建议：拆成多台机器做分布式部署，或先对模型做量化 / 蒸馏压缩，再按压缩后的规模采购。');
       } else {
-        plan = 'a100_4';
-        reasons.push('训练需要的显存是权重的数倍（梯度 + 优化器状态 + 激活），FP16 口径约 ' + Math.round(byFp16) + 'GB，4 卡 A100 才有余量。');
-        reasons.push('V100 不支持 BF16，做训练要额外处理 loss scaling，时间成本高。');
+        reasons.push('你的并发需求（' + LABEL.conc[a.conc] + '）比显存需求更吃配置：即便显存够，单机也需要足够多的卡才能同时服务这么多路请求。');
+        reasons.push('建议直接沟通调度方案：可以用多卡 + 请求排队把有限算力服务更多人，但需要明确你能接受的等待时间。');
       }
-      alt = 'v100_4';
-    } else if (a.use === 'aigc' || a.model === 'image') {
-      plan = a.budget === 'low' ? 'v100_1' : 'v100_2';
-      reasons.push('图像 / 视频生成主要吃单卡显存与显存带宽，双卡可以并行出图提高吞吐。');
-      reasons.push('如果你的工作流以出图为主、几乎不做多卡并行，先上单卡验证需求再扩卡更稳妥。');
-      alt = 'v100_1';
-    } else if (a.use === 'teach') {
-      plan = a.budget === 'low' ? 'v100_2' : many ? 'a100_4' : 'v100_4';
-      reasons.push('多人共用的瓶颈在并发与隔离：显存总量要够多路 KV Cache（按 4 路约 ' + Math.round(byQ8 + KV[a.ctx] * 4) + 'GB 估）。');
-      reasons.push('若预算允许，A100 的 MIG 可以把一张卡切成多个互不干扰的实例，共享场景利用率明显更高。');
-      alt = 'v100_4';
-    } else if (a.use === 'lora') {
-      if (a.model === 'large' || a.model === 'xlarge') { plan = 'a100_4'; alt = 'v100_4'; }
-      else if (a.budget === 'low') { plan = 'v100_1'; alt = 'v100_2'; }
-      else { plan = 'v100_2'; alt = 'a100_1'; }
-      reasons.push('LoRA 只训适配器、冻结主干，显存压力接近推理，' + (a.model === 'small' || a.model === 'mid' ? 'V100 32G 完全够用' : '但模型上到 32B 以上仍需更大显存') + '。');
-      reasons.push('实测口径：LoRA 场景显存需求约为全参微调的 1/3~1/5，是低成本微调的主流做法。');
+      const top = a100_8;
+      return {
+        plan: top, planObj: PLANS[top], alt: null, reasons,
+        byQ4: Math.round(needQ4), byQ8: Math.round(needInt8), byFp16: Math.round(needFp16),
+        totalVram: PLANS[top].vramNum, headroom: PLANS[top].vramNum - inferred,
+        precision: isTrain ? 'FP16（训练）' : 'INT8（推理）', overflow: true, lanes
+      };
+    }
+
+    // 3) 在可行方案里挑满足预算的最小配置
+    const cap = CAP[a.budget];
+    const affordable = capable.filter((k) => PLANS[k].price[0] <= cap);
+    let plan, cheapestFit = capable[0];
+    let tightBudget = false;
+
+    if (affordable.length) {
+      plan = affordable[0];
+      reasons.push('按你的需求，显存需求约 ' + Math.round(inferred) + 'GB（' +
+        (isTrain ? 'FP16 训练口径' : 'INT8 量化推理口径') + '，已含 ' + lanes + ' 路并发的 KV Cache）。');
+      reasons.push('该需求最低需要 ' + PLANS[cheapestFit].name + '；结合你给的预算（' + LABEL.budget[a.budget] +
+        '），推荐 ' + PLANS[plan].name + '。');
     } else {
-      // 推理
-      const need8 = byQ8, need16 = byFp16;
-      if (a.model === 'xlarge') { plan = 'a100_4'; alt = 'a100_8'; }
-      else if (a.model === 'large') { plan = many ? 'a100_4' : 'v100_4'; alt = 'a100_1'; }
-      else if (many) { plan = 'v100_4'; alt = 'a100_1'; }
-      else if (team) { plan = a.budget === 'low' ? 'v100_1' : 'v100_2'; alt = 'v100_2'; }
-      else { plan = a.budget === 'low' ? 'v100_1' : 'v100_2'; alt = 'v100_1'; }
-      reasons.push('推理的显存 = 权重 + KV Cache + 框架开销。当前场景 INT8 量化约需 ' + Math.round(need8) + 'GB，FP16 约需 ' + Math.round(need16) + 'GB，建议按 FP16 留余量。');
-      reasons.push(a.ctx === 'long' ? '你选了 64K 以上长上下文，KV Cache 会成为主要占用，显存要比常规对话多留一倍。' : '短上下文场景显存压力主要来自权重，量化后单卡就能承载小模型。');
+      plan = cheapestFit;
+      tightBudget = true;
+      reasons.push('⚠️ 按你填的预算（' + LABEL.budget[a.budget] + '）很难覆盖实际需求：单是"装得下 + 扛得住并发"这两条线，最低就是 ' +
+        PLANS[cheapestFit].name + '（约 ' + money(PLANS[cheapestFit].price[0]) + ' 起）。');
+      reasons.push('三条可行路径：① 提高预算一次到位；② 先用月付整卡服务 / 租用过渡，把需求验证清楚再采购；③ 对模型做量化压缩，把显存需求降下来再选小配置。');
     }
 
-    // 预算约束修正
-    const cap = { low: 12000, mid: 33000, high: 105000, top: Infinity }[a.budget];
-    if (PLANS[plan].price[0] > cap) {
-      const order = ['v100_1', 'v100_2', 'v100_4', 'a100_1', 'a100_4', 'a100_8'];
-      const cheaper = order.filter((k) => PLANS[k].price[0] <= cap);
-      if (cheaper.length) {
-        const fallback = cheaper[cheaper.length - 1];
-        if (fallback !== plan) {
-          reasons.push('⚠️ 按你填的预算（' + LABEL.budget[a.budget] + '），推荐方案偏紧：可以考虑先上 ' + PLANS[fallback].name + ' 满足当前需求，后续再扩卡；或者提高预算一次到位。');
-          alt = plan;
-          plan = fallback;
-        }
+    // 4) 训练场景必须提示 BF16
+    const p = PLANS[plan];
+    if (isTrain) {
+      if (p.bf16) {
+        reasons.push('A100 支持 BF16，与社区训练脚本的默认配置一致，不需要像 V100 那样改回 FP16 并额外处理数值溢出。');
       } else {
-        reasons.push('⚠️ 按当前预算很难一次到位，建议先用租用 / 月付方式过渡，等需求验证清楚再采购。');
+        reasons.push('⚠️ V100 不支持 BF16，做训练只能用 FP16 + loss scaling，调参成本更高、更容易掉点；如果训练是主力用途，建议把预算往 A100 挪。');
       }
     }
+    // 5) 场景化补充
+    if (a.use === 'aigc' || a.model === 'image') {
+      reasons.push('图像 / 视频生成主要吃单卡显存与显存带宽：显存决定能出多高分辨率，带宽决定出片速度。多卡主要用于"并发出图"，不是让单张出得更快。');
+    } else if (a.use === 'teach') {
+      reasons.push('多人共用的真正瓶颈在并发与隔离。若预算允许，A100 的 MIG 能把一张卡切成多个互不干扰的实例，共享场景的利用率明显高于 V100 分时。');
+    } else if (a.use === 'lora') {
+      reasons.push('LoRA 只训适配器、冻结主干，显存压力接近推理而非全参训练（约为其 1/3~1/5），因此 V100 32G 就能覆盖 7B~14B 的 LoRA。');
+    } else if (a.use === 'infer') {
+      reasons.push('推理显存 = 权重 + KV Cache + 框架开销。建议按量化口径留 20% 以上余量，否则上线后一加并发或加长上下文就会 OOM。');
+      if (a.ctx === 'long') reasons.push('你选了 64K 以上长上下文，KV Cache 会成为主要占用之一，比常规对话要明显多留显存。');
+      if (many) reasons.push('并发按 ' + lanes + ' 路估算，并已经用"每卡 2 路"的下限做了校验 —— 如果你的请求普遍很长，实际能稳定的并发会更少，建议按实测调。');
+    }
 
-    const planObj = PLANS[plan];
-    const vramNumbers = { '32GB': 32, '64GB': 64, '128GB': 128, '40GB': 40, '160GB / 320GB': 160, '640GB': 640, '104GB': 104 };
-    const totalVram = vramNumbers[planObj.vram] || 32;
-    const headroom = totalVram - byFp16;
+    // 6) 备选：比推荐更强一档
+    const stronger = ORDER.filter((k) => PLANS[k].tier > p.tier && fitsVram(k) && fitsLanes(k))[0] || null;
+    let alt = !tightBudget && stronger && stronger !== plan ? stronger : null;
 
-    return { plan, planObj, alt, reasons, byFp16, byQ8, byQ4, totalVram, headroom, need: byFp16 };
+    return {
+      plan, planObj: p, alt, reasons,
+      byQ4: Math.round(needQ4), byQ8: Math.round(needInt8), byFp16: Math.round(needFp16),
+      totalVram: p.vramNum, headroom: p.vramNum - inferred,
+      precision: isTrain ? 'FP16（训练）' : 'INT8（推理）',
+      fits: p.vramNum >= needFp16, tightBudget, lanes
+    };
   }
 
   const money = (n) => n >= 10000 ? (n / 10000).toFixed(n % 10000 === 0 ? 0 : 1) + ' 万' : n.toLocaleString('zh-CN') + ' 元';
@@ -321,16 +348,22 @@
   function render(a, d) {
     const p = d.planObj;
     const priceTxt = money(p.price[0]) + ' ~ ' + money(p.price[1]);
-    const fit = d.headroom >= 8 ? '显存余量充足，可支撑后续模型升级' : d.headroom >= 0 ? '显存基本够用，建议按量化方案部署' : '显存偏紧，需量化或增加卡数';
+    const fit = d.overflow ? '超出常规现货配置范围，建议拆机或压缩模型'
+      : d.headroom >= 16 ? '显存余量充足（' + Math.round(d.headroom) + 'GB），可支撑后续模型升级与并发增长'
+      : d.headroom >= 5 ? '显存够用（余量 ' + Math.round(d.headroom) + 'GB），建议按' + (d.precision.indexOf('INT8') >= 0 ? '量化方案部署' : '当前精度部署')
+      : d.headroom >= 0 ? '显存刚好够用，上线前请实测，并优先控制并发或上下文长度'
+      : '按 FP16 口径偏紧，需用量化部署';
 
     const rows = [
-      ['权重显存（INT8 口径）', Math.round(d.byQ8) + ' GB'],
-      ['权重显存（FP16 口径）', Math.round(d.byFp16) + ' GB'],
-      ['推荐方案显存总量', p.vram],
+      ['权重显存（INT4 量化口径）', d.byQ4 + ' GB'],
+      ['权重+KV（INT8 量化口径）', d.byQ8 + ' GB'],
+      ['权重+KV+' + (a.use === 'train' ? '训练开销' : '开销') + '（FP16 口径）', d.byFp16 + ' GB'],
+      ['本方案的显存总量', p.vram],
+      ['并发能力校验', p.cards + ' 卡 × 2 路 = 可服务约 ' + (p.cards * 2) + ' 路并发（你按 ' + d.lanes + ' 路估算）'],
       ['余量判断', fit]
     ];
 
-    const altHtml = d.alt ? '<h3 class="sec">备选方案</h3><p><strong>' + PLANS[d.alt].name + '</strong>（' + PLANS[d.alt].gpu + '，约 ' + money(PLANS[d.alt].price[0]) + '~' + money(PLANS[d.alt].price[1]) + '）—— ' + PLANS[d.alt].fit + '。</p>' : '';
+    const altHtml = d.alt ? '<h3 class="sec">想留更多余量？下一档</h3><p><strong>' + PLANS[d.alt].name + '</strong>（' + PLANS[d.alt].gpu + '，约 ' + money(PLANS[d.alt].price[0]) + '~' + money(PLANS[d.alt].price[1]) + '）—— ' + PLANS[d.alt].fit + '。</p>' : '';
 
     document.getElementById('result').innerHTML =
       '<div class="card show" id="resCard">' +
