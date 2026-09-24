@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7fafc">
+<title>V100 PCIe 和 SXM2 有什么区别？买错装不进机箱 | 四川积电汇芯科技有限公司</title>
+<meta name="description" content="接口形态、散热、NVLink、主板兼容性、可维护性逐项对比，附改装与整机两条路线建议。">
+<meta name="keywords" content="V100 PCIe SXM2 区别,V100 SXM2,V100 NVLink">
+<meta name="author" content="四川积电汇芯科技有限公司">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://327585419.github.io/jidianhuixin.github.io/articles/v100-pcie-vs-sxm2.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="四川积电汇芯科技有限公司">
+<meta property="og:title" content="V100 PCIe 和 SXM2 有什么区别？买错装不进机箱">
+<meta property="og:description" content="接口形态、散热、NVLink、主板兼容性、可维护性逐项对比，附改装与整机两条路线建议。">
+<meta property="og:url" content="https://327585419.github.io/jidianhuixin.github.io/articles/v100-pcie-vs-sxm2.html">
+<meta property="og:image" content="https://327585419.github.io/jidianhuixin.github.io/assets/img/神机宣传图_横版.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="article.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"V100 PCIe 和 SXM2 有什么区别？买错装不进机箱","description":"接口形态、散热、NVLink、主板兼容性、可维护性逐项对比，附改装与整机两条路线建议。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-pcie-vs-sxm2.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"V100 PCIe 和 SXM2 有什么区别？买错装不进机箱","item":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-pcie-vs-sxm2.html"}]}]}</script>
+</head>
+<body>
+<header class="art-top">
+  <div class="container">
+    <a class="art-brand" href="../index.html"><span class="mark">积</span>积电汇芯 · 算力知识库</a>
+    <nav class="art-nav">
+      <a href="index.html">全部文章</a>
+      <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#contact">联系我们</a>
+    </nav>
+  </div>
+</header>
+<main class="art">
+  <article class="art-wrap">
+    <nav class="art-crumb"><a href="../index.html">首页</a> / <a href="index.html">算力知识库</a> / 正文</nav>
+    <h1 class="art-title">V100 PCIe 和 SXM2 有什么区别？买错装不进机箱</h1>
+    <div class="art-meta">
+      <span>发布：2026-09-24</span>
+      <span>分类：选型对比</span>
+      <span>阅读约 6 分钟</span>
+    </div>
+    <div class="art-body">
+<p>买 V100 之前，最该先确认的不是“16G 还是 32G”，而是“PCIe 还是 SXM2”。这两者虽然都叫 V100、都是 GV100 核心、都是 12nm、211 亿晶体管、CUDA 计算能力 7.0，但物理形态、供电、散热、互联完全是两条路线。买错了，轻则装不进机箱，重则整机点不亮。</p>
+<h2>一、物理形态：一个插槽，一个焊在板上</h2>
+<p>PCIe 版是标准双宽插卡，走 PCIe 3.0 x16，可以直接插进有 x16 插槽的服务器或工作站主板。SXM2 版是板载模块，通过 SXM2 插槽固定在专用基板上，自己单独买一张 SXM2 卡是没有意义的——它没有金手指，也没有挡板，你没法把它插进普通机箱。</p>
+<p>这就是硬约束：SXM2 必须配 SXM2 基板，而 SXM2 基板通常只出现在 4 卡、8 卡的原厂 GPU 服务器里，比如 DGX-1、部分浪潮/超微的 GPU 机型。普通塔式机箱、普通主板，只能走 PCIe 路线。</p>
+<h2>二、散热与供电：被动散热不是“加个风扇”那么简单</h2>
+<p>两种 V100 都是被动散热，靠服务器风道把热量带走。PCIe 版约 250W，SXM2 版约 300W，都依赖机箱内强劲的定向气流。很多人捡漏 SXM2 拆机卡后想“自己加涡轮风扇改装”，实际代价不小：</p>
+<ul>
+<li>噪音：涡轮风扇高转速下接近小型吹风机，放办公室基本没法待。</li>
+<li>温度：风道设计不对，核心温度容易压不住，长期高温会降频甚至影响寿命。</li>
+<li>稳定性：供电和散热余量不足时，多卡满载容易掉卡、报错。</li>
+</ul>
+<p>电源同样要算清楚。单卡 250W/300W，8 卡就是 2000W 以上，还要留出 CPU、主板、风扇的余量。普通 850W 电源带一张卡勉强，带多卡基本没戏。SXM2 整机的供电是基板统一分配，反而比你自己拼 PCIe 多卡更稳。</p>
+<h2>三、NVLink：SXM2 的真正价值在多卡</h2>
+<p>SXM2 版支持 NVLink 2.0，6 链路、约 300 GB/s 双向聚合，还能配合 NVSwitch 做全互联。这意味着 8 卡之间可以高带宽直接通信，做张量并行、大模型推理时通信瓶颈小得多。PCIe 版只有 PCIe 3.0 x16，多卡通信要绕 PCIe 交换机或走 CPU，带宽和延迟都吃亏。</p>
+<p>如果你只是单卡跑推理、微调小模型，PCIe 完全够用。但如果你要 4 卡、8 卡跑大模型并行，SXM2 + NVSwitch 才是正确形态。顺带说一句，V100 支持 FP16 混合精度，不支持 BF16、不支持 FP8、无 MIG；主流新版 PyTorch/vLLM 已逐步淡化对 sm_70 的官方支持，实际可用性取决于版本组合，部署前需实测确认。</p>
+<h2>四、两条路线怎么选</h2>
+<table><thead><tr><th>路线</th><th>适合谁</th><th>优点</th><th>风险</th></tr></thead><tbody><tr><td>自己改装捡漏</td><td>有服务器经验、能折腾风道和供电</td><td>单卡成本低</td><td>装不进、散热翻车、稳定性差</td></tr><tr><td>直接买整机</td><td>想省心、要稳定跑业务</td><td>风道供电匹配、可上门交付</td><td>整机预算更高</td></tr></tbody></table>
+<p>截至 2026 年，二手行情仅供参考、以当日货源为准：V100 32G SXM2 拆机卡约 3000~6000 元，V100 32G PCIe 约 6000~9000 元，V100 32G 整机（九成新）约 1.8 万~2.3 万元。云上 V100 实例月付约 3800 元级，云租用约 0.16 美元/GPU/小时起，具体以云厂商当期报价为准。</p>
+<h2>五、常见翻车案例与检查清单</h2>
+<p>翻车最多的情况：买了 SXM2 卡发现没有基板；买了 PCIe 卡发现机箱塞不下双宽；多卡拼装后风道混乱、满载掉卡；电源功率不够，开机就保护。</p>
+<p>下单前逐项确认：</p>
+<ul>
+<li>卡是 PCIe 还是 SXM2？有没有对应基板或插槽？</li>
+<li>机箱能否容纳双宽卡、长度和高度是否够？</li>
+<li>电源功率、显卡供电接口是否匹配？</li>
+<li>风道是否支持被动散热？需不需要改涡轮？</li>
+<li>多卡是否要 NVLink/NVSwitch？PCIe 版没有。</li>
+<li>显存要 16G 还是 32G？大模型建议 32G。</li>
+<li>软件栈是否还支持 sm_70？部署前实测确认。</li>
+</ul>
+<h2>结论与建议</h2>
+<p>单卡推理、预算有限、机箱普通，选 PCIe 版 V100 32G，别碰 SXM2。要多卡并行、跑大模型、追求通信效率，直接上 SXM2 整机，别自己拼。A100 对比时一定要写清是 SXM4 还是 PCIe，两者带宽和功耗不同；RTX 4090 单卡性价比高，但 24G 显存上限、无 NVLink、无 ECC，多卡并行不是它的战场。截至 2026 年，二手 V100 仍是低成本入门算力的务实选择，但形态选错，后面全是坑。</p>
+<p>如果你正在纠结配置、机箱兼容性或整机方案，可以在文末联系获取配置与报价，把用途和预算说清楚，能少走很多弯路。</p>
+    </div>
+
+    <aside class="art-cta">
+      <h2>需要一份具体的配置与报价？</h2>
+      <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
+      <div class="btns">
+        <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
+        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+      </div>
+    </aside>
+
+    <nav class="art-rel">
+      <h2>继续了解</h2>
+      <ul>
+        <li><a href="v100-32g-single-card-worth-it.html">V100 32G 单卡还值得买吗？2026 年真实适用边界</a></li>
+        <li><a href="v100-vs-a100.html">V100 和 A100 怎么选？一张决策表说清差价到底买到了什么</a></li>
+      </ul>
+    </nav>
+  </article>
+
+  <footer class="art-foot">
+    <div class="art-wrap">
+      <p><strong>四川积电汇芯科技有限公司</strong> · 成都市武侯区晋阳路432号1栋E馆3楼329室</p>
+      <p>电话/微信：<a href="tel:+8618683421636">186-8342-1636</a> ｜ 邮箱：<a href="mailto:327585419@qq.com">327585419@qq.com</a> ｜ <a href="../index.html">返回官网首页</a></p>
+      <p>本文为通用选型与技术科普内容，行情与参数随货源、批次、软件版本变化，实际配置与价格以沟通确认为准。</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

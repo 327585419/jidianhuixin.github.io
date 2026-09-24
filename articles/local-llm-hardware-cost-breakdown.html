@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7fafc">
+<title>本地跑大模型到底要花多少钱？一次把账算明白 | 四川积电汇芯科技有限公司</title>
+<meta name="description" content="从裸卡、整机、机位、电费到运维，列出真实开支项与容易被漏掉的隐性成本。">
+<meta name="keywords" content="本地部署大模型 成本,大模型 一体机 价格,自建算力 多少钱">
+<meta name="author" content="四川积电汇芯科技有限公司">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://327585419.github.io/jidianhuixin.github.io/articles/local-llm-hardware-cost-breakdown.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="四川积电汇芯科技有限公司">
+<meta property="og:title" content="本地跑大模型到底要花多少钱？一次把账算明白">
+<meta property="og:description" content="从裸卡、整机、机位、电费到运维，列出真实开支项与容易被漏掉的隐性成本。">
+<meta property="og:url" content="https://327585419.github.io/jidianhuixin.github.io/articles/local-llm-hardware-cost-breakdown.html">
+<meta property="og:image" content="https://327585419.github.io/jidianhuixin.github.io/assets/img/神机宣传图_横版.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="article.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"本地跑大模型到底要花多少钱？一次把账算明白","description":"从裸卡、整机、机位、电费到运维，列出真实开支项与容易被漏掉的隐性成本。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/local-llm-hardware-cost-breakdown.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"本地跑大模型到底要花多少钱？一次把账算明白","item":"https://327585419.github.io/jidianhuixin.github.io/articles/local-llm-hardware-cost-breakdown.html"}]}]}</script>
+</head>
+<body>
+<header class="art-top">
+  <div class="container">
+    <a class="art-brand" href="../index.html"><span class="mark">积</span>积电汇芯 · 算力知识库</a>
+    <nav class="art-nav">
+      <a href="index.html">全部文章</a>
+      <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#contact">联系我们</a>
+    </nav>
+  </div>
+</header>
+<main class="art">
+  <article class="art-wrap">
+    <nav class="art-crumb"><a href="../index.html">首页</a> / <a href="index.html">算力知识库</a> / 正文</nav>
+    <h1 class="art-title">本地跑大模型到底要花多少钱？一次把账算明白</h1>
+    <div class="art-meta">
+      <span>发布：2026-09-24</span>
+      <span>分类：成本与回本</span>
+      <span>阅读约 6 分钟</span>
+    </div>
+    <div class="art-body">
+<p>本地跑大模型，热闹归热闹，真到掏钱这一步，很多人是懵的。有人花两万块攒了台机器，结果模型加载不动；也有人一上来就买八卡整机，最后发现电费和噪音先把人劝退了。这篇不聊虚的，把四块账摊开算：硬件、场地与电力、软件与部署、长期运维。</p>
+<h2>一、硬件：二手和全新，差价能差出一台车</h2>
+<p>硬件是最大头，也是水最深的地方。以能跑主流开源模型为目标，两条路线摆在这：</p>
+<table><thead><tr><th>路线</th><th>典型配置</th><th>参考区间（截至 2026 年，仅供参考，以当日货源为准）</th></tr></thead><tbody><tr><td>二手入门</td><td>二手 V100 32G SXM2 整机</td><td>约 1.8 万~2.3 万元</td></tr><tr><td>二手单卡</td><td>V100 32G SXM2 拆机卡</td><td>约 3000~6000 元</td></tr><tr><td>二手单卡</td><td>V100 32G PCIe</td><td>约 6000~9000 元</td></tr><tr><td>全新进阶</td><td>A100 40G/80G 整机</td><td>需按卡数与形态询价，波动大</td></tr><tr><td>消费级</td><td>RTX 4090 24G 单卡</td><td>单卡性价比高，但形态受限</td></tr></tbody></table>
+<p>V100 是 Volta 架构，2017 年的卡，CUDA 能力 7.0，HBM2 显存 16GB 或 32GB，4096-bit 位宽、900 GB/s 带宽，FP32 约 15.7 TFLOPS，FP16 张量核心约 125 TFLOPS（16GB PCIe 版约 112）。它不支持 BF16、不支持 FP8、没有 MIG，SXM2 版才有 NVLink 2.0。关键提醒：主流新版 PyTorch/vLLM 已逐步淡化对 sm_70 的官方支持，能不能跑、跑哪个版本，<strong>部署前必须实测确认</strong>。</p>
+<p>那二手为什么在企业场景可行？因为企业买的不是"最新"，是"够用且能算清账"。V100 32G 的显存和带宽放在今天仍能扛住一批推理和轻量微调任务，二手整机价格只有全新方案的一个零头，摊到两三年折旧里，单月成本可能比云租还低。前提是货源靠谱、能测、有备件——这恰恰是找专业渠道的价值。</p>
+<h2>二、场地与电力：最容易被忽略的隐形账</h2>
+<p>一张 V100 PCIe 版约 250W，SXM2 版约 300W，且都是被动散热，必须靠服务器风道。八卡整机满载轻松上 2.5~3kW，加上空调，一个机柜的电力报装就不是小事。</p>
+<ul>
+<li><strong>电费</strong>：按满载 3kW、每天跑 10 小时、商用电 1 元/度估算，一个月约 900 元，一年过万。</li>
+<li><strong>散热改造</strong>：被动卡塞进普通机箱等于自杀，风道、暴力风扇、隔音机柜都要钱，噪音能到 70 分贝以上，放办公室基本别想。</li>
+<li><strong>停机与备件</strong>：二手卡有故障率，备一张同型号卡、留出停机窗口，是隐性但真实的成本。</li>
+<li><strong>人员学习成本</strong>：CUDA 环境、驱动版本、模型量化、显存调优，没个懂行的人，时间就是钱。</li>
+</ul>
+<h2>三、部署服务费该不该花</h2>
+<p>自装和代部署的差别，本质是时间成本。自己从装系统、配 CUDA、调驱动、跑通模型，顺的话两三天，踩坑一两周很常见，还未必调得动。代部署把这段压缩到上门或远程一次交付，含系统与 CUDA 环境安装、模型部署调试、技术支持。</p>
+<p>判断标准很简单：如果你的时间单价高于服务费，或者团队没人专职搞这块，这笔钱该花。四川积电汇芯科技有限公司就提供这类服务，成都可面交/上门，外地顺丰保价，也做 GPU 服务器定制（1~8 卡）、算力服务器升级与运维，还有"先租后买 / 月付整卡服务"，租金可抵货款——预算紧又想先验证的，这条路值得问。</p>
+<h2>四、三档预算与对应能力</h2>
+<table><thead><tr><th>档位</th><th>预算区间（仅供参考）</th><th>能干什么</th></tr></thead><tbody><tr><td>入门</td><td>1.8 万~3 万元</td><td>单卡/双卡 V100 32G，跑 7B~13B 量化推理、轻量微调</td></tr><tr><td>进阶</td><td>5 万~15 万元</td><td>多卡 V100 或 A100，跑更大模型、并发推理、小规模训练</td></tr><tr><td>企业</td><td>15 万元以上</td><td>多卡 A100 整机，私有化部署、稳定并发、可扩展运维</td></tr></tbody></table>
+<p>A100 要分清形态：SXM4 和 PCIe 的带宽与功耗不同，40GB 与 80GB 带宽约 1555 / 2039 GB/s，支持 BF16、TF32、MIG。RTX 4090 显存 24GB、带宽约 1008 GB/s，单卡香，但不支持 NVLink、无 ECC、非服务器风道，多卡并行会受限。</p>
+<h2>结论与建议</h2>
+<p>预算 2 万以内、只做验证和轻量推理，优先考虑二手 V100 整机或先租后买；预算 5 万以上、要稳定跑业务，直接上多卡并配好散热与备件；预算低于 1.5 万又想要稳定服务，老实说，先用云更划算，别硬自建。截至 2026 年的行情波动快，所有价格以当日货源为准，下单前务必实测确认版本兼容性。</p>
+<p>具体配置怎么搭、当前货源什么价，可以在文末联系获取一份针对你场景的配置与报价。</p>
+    </div>
+
+    <aside class="art-cta">
+      <h2>需要一份具体的配置与报价？</h2>
+      <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
+      <div class="btns">
+        <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
+        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+      </div>
+    </aside>
+
+    <nav class="art-rel">
+      <h2>继续了解</h2>
+      <ul>
+        <li><a href="llm-inference-throughput-anatomy.html">推理速度为什么和你想的不一样？TTFT、吞吐与并发的拆解</a></li>
+        <li><a href="chengdu-gpu-server-local-supplier.html">成都买 GPU 服务器怎么找靠谱供应商？面交、验机与售后</a></li>
+      </ul>
+    </nav>
+  </article>
+
+  <footer class="art-foot">
+    <div class="art-wrap">
+      <p><strong>四川积电汇芯科技有限公司</strong> · 成都市武侯区晋阳路432号1栋E馆3楼329室</p>
+      <p>电话/微信：<a href="tel:+8618683421636">186-8342-1636</a> ｜ 邮箱：<a href="mailto:327585419@qq.com">327585419@qq.com</a> ｜ <a href="../index.html">返回官网首页</a></p>
+      <p>本文为通用选型与技术科普内容，行情与参数随货源、批次、软件版本变化，实际配置与价格以沟通确认为准。</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

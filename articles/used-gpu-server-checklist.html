@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7fafc">
+<title>买二手 GPU 服务器怎么验货？一份 30 项现场检查清单 | 四川积电汇芯科技有限公司</title>
+<meta name="description" content="从机身序列号、GPU 健康、显存与 ECC、电源冗余到压力测试，逐项给判断标准。">
+<meta name="keywords" content="二手GPU服务器 验货,二手服务器 检查,GPU 二手 避坑">
+<meta name="author" content="四川积电汇芯科技有限公司">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://327585419.github.io/jidianhuixin.github.io/articles/used-gpu-server-checklist.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="四川积电汇芯科技有限公司">
+<meta property="og:title" content="买二手 GPU 服务器怎么验货？一份 30 项现场检查清单">
+<meta property="og:description" content="从机身序列号、GPU 健康、显存与 ECC、电源冗余到压力测试，逐项给判断标准。">
+<meta property="og:url" content="https://327585419.github.io/jidianhuixin.github.io/articles/used-gpu-server-checklist.html">
+<meta property="og:image" content="https://327585419.github.io/jidianhuixin.github.io/assets/img/神机宣传图_横版.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="article.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"买二手 GPU 服务器怎么验货？一份 30 项现场检查清单","description":"从机身序列号、GPU 健康、显存与 ECC、电源冗余到压力测试，逐项给判断标准。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/used-gpu-server-checklist.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"买二手 GPU 服务器怎么验货？一份 30 项现场检查清单","item":"https://327585419.github.io/jidianhuixin.github.io/articles/used-gpu-server-checklist.html"}]}]}</script>
+</head>
+<body>
+<header class="art-top">
+  <div class="container">
+    <a class="art-brand" href="../index.html"><span class="mark">积</span>积电汇芯 · 算力知识库</a>
+    <nav class="art-nav">
+      <a href="index.html">全部文章</a>
+      <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#contact">联系我们</a>
+    </nav>
+  </div>
+</header>
+<main class="art">
+  <article class="art-wrap">
+    <nav class="art-crumb"><a href="../index.html">首页</a> / <a href="index.html">算力知识库</a> / 正文</nav>
+    <h1 class="art-title">买二手 GPU 服务器怎么验货？一份 30 项现场检查清单</h1>
+    <div class="art-meta">
+      <span>发布：2026-09-24</span>
+      <span>分类：行情与价格</span>
+      <span>阅读约 9 分钟</span>
+    </div>
+    <div class="art-body">
+<p>二手 GPU 服务器不是普通二手电脑，它更像一台“已经跑过几年重活的工程设备”。验货的核心逻辑只有一句话：<strong>先看不可逆的，再看可修复的</strong>。外壳划痕、缺导轨、少螺丝都能补；显存颗粒老化、ECC 错误累积、主板烧蚀、NVLink 链路损坏，基本等于判死刑或大修。所以现场顺序应该是：外观与配置核对 → 通电看识别 → 查错误计数 → 显存与链路测试 → 压力与温度 → 电源/背板/风扇 → 交易留证。下面这份 30 项清单，按这个顺序展开。</p>
+<h2>一、先看“不可逆”的：外观、配置与身份核对</h2>
+<ol>
+<li><strong>核对型号与卡型</strong>：V100 要分清 PCIe 还是 SXM2，A100 要分清 40GB 还是 80GB、SXM4 还是 PCIe。两者带宽、功耗、互联能力完全不同，不能只听卖家说“A100”。</li>
+<li><strong>看 GPU 序列号与机身标签是否一致</strong>：用 <code>nvidia-smi -q</code> 里的 Serial 与机箱标签、采购单据比对，防止“换卡”。</li>
+<li><strong>查主板与背板烧蚀痕迹</strong>：重点看 PCIe 插槽、SXM 基板、供电接口附近有无发黄、发黑、焊油残留。</li>
+<li><strong>看被动散热鳍片是否变形</strong>：V100 全系被动散热，鳍片压伤会直接影响风道效率。</li>
+<li><strong>确认电源冗余</strong>：服务器应配双电或四电，缺一路还能降功率跑；单电机器压测时容易掉电。</li>
+<li><strong>检查背板与盘位</strong>：背板型号、SAS/SATA/NVMe 支持、盘位数量要跟描述一致，缺背板等于整机残废。</li>
+<li><strong>RAID 卡与缓存电池</strong>：有 RAID 卡要看型号、缓存大小、电池是否鼓包；无电池的写缓存策略要确认。</li>
+<li><strong>风扇与导轨</strong>：原装风扇数量、转速是否可调；导轨缺失虽可后配，但说明上架环境可能粗暴。</li>
+<li><strong>看机箱螺丝与防拆贴</strong>：螺丝齐全、防拆贴完整说明没被反复拆修；缺失则要追问原因。</li>
+</ol>
+<h2>二、性能与健康：nvidia-smi、ECC 与显存测试</h2>
+<ol>
+<li><strong><code>nvidia-smi</code> 看识别数量与拓扑</strong>：确认所有卡都被识别，<code>nvidia-smi topo -m</code> 看 NVLink 是否成对出现。SXM2 V100 应显示 NVLink，PCIe 版没有。</li>
+<li><strong>看 Persistence Mode 与驱动/CUDA 版本</strong>：驱动太老会影响新框架，CUDA 版本要跟你的 PyTorch/vLLM 组合匹配。</li>
+<li><strong>读 ECC 错误</strong>：<code>nvidia-smi -q | grep -i ecc</code> 重点看 Volatile 与 Aggregate 的 Corrected/Uncorrected。有 Uncorrected 或持续增长的 Corrected，直接放弃。</li>
+<li><strong>看 Retired Pages</strong>：显存有不可恢复页会被退休，数量不为 0 说明颗粒已老化。</li>
+<li><strong>看温度与功耗墙</strong>：<code>nvidia-smi -q -d POWER,TEMPERATURE</code>，确认当前功耗上限和温度阈值是否被改过。</li>
+<li><strong>显存测试</strong>：现场跑 <code>cuda-memtest</code> 或厂商诊断工具，至少覆盖全部显存；V100 32GB 要跑满 32GB，A100 80GB 要跑满 80GB。</li>
+<li><strong>NVLink 带宽测试</strong>：SXM2 机器用 <code>nvbandwidth</code> 或 NCCL 小测试，确认 6 链路约 300GB/s 双向聚合量级；异常低说明链路或基板有问题。</li>
+<li><strong>PCIe 链路宽度与速率</strong>：<code>nvidia-smi -q | grep -i link</code> 确认 x16 与 Gen3/Gen4 符合预期，降速可能是插槽或转接板问题。</li>
+<li><strong>注意 V100 软件兼容性</strong>：sm_70 在新版 PyTorch/vLLM 中官方支持逐步淡化，部署前必须实测你的版本组合，别等买完才发现跑不起来。</li>
+<li><strong>A100 要写清对比口径</strong>：SXM4 与 PCIe 的带宽、功耗不同，谈性能时必须说明是哪种形态。</li>
+<li><strong>RTX 4090 别当服务器卡用</strong>：24GB 显存、无 NVLink、无 ECC、非服务器风道，多卡并行和长期稳定性跟 V100/A100 不是一个赛道。</li>
+</ol>
+<h2>三、压力与稳定性：跑多久、看什么</h2>
+<ol>
+<li><strong>短压 10 分钟</strong>：先跑 <code>gpu-burn</code> 或矩阵乘，看是否立刻报错、掉卡。</li>
+<li><strong>长压 30~60 分钟</strong>：观察温度是否持续爬升、是否触发降频。二手卡建议至少 30 分钟，整机交付建议 1 小时。</li>
+<li><strong>看降频原因</strong>：<code>nvidia-smi -q -d PERFORMANCE</code> 里查 Clocks Throttle Reasons，区分温度墙、功耗墙、还是硬件慢速。</li>
+<li><strong>看风扇与进风温度</strong>：被动卡依赖机箱风道，进风温度高会直接撞温度墙；现场要摸出风口、看转速。</li>
+<li><strong>看电源功率余量</strong>：8 卡 V100 SXM2 整机功耗很高，电源额定功率要留足余量，压测时看是否掉电重启。</li>
+<li><strong>看日志有无 Xid 错误</strong>：<code>dmesg | grep -i xid</code>，出现 Xid 说明驱动层已记录硬件异常，不能忽略。</li>
+</ol>
+<h2>四、常见话术识别与交易保障</h2>
+<ol>
+<li><strong>“成色 99 新”怎么判断</strong>：看成色不如看 ECC 计数、退休页、螺丝与防拆贴。外观再新，ECC 有 Uncorrected 也不能要。</li>
+<li><strong>“一直自用、没跑过重活”</strong>：要求看 <code>nvidia-smi -q</code> 的累计错误与温度历史，跑过矿或长期训练的卡，散热鳍片和供电口会有痕迹。</li>
+<li><strong>价格区间要有时效声明</strong>：截至 2026 年，二手 V100 32G SXM2 拆机卡约 3000~6000 元，V100 32G PCIe 约 6000~9000 元，V100 32G 整机九成新约 1.8 万~2.3 万元；云上 V100 实例月付约 3800 元级，云租用约 0.16 美元/GPU/小时起。以上仅供参考，以当日货源为准。</li>
+<li><strong>交易留证与售后</strong>：面交要现场跑完上述测试再付款；外地走顺丰保价，录制开箱与上电视频；合同写清保修期、ECC 异常是否包换、是否含系统与 CUDA 环境安装。成都本地可面交/上门，外地可保价发货，售后条款要落到文字。</li>
+</ol>
+<p><strong>结论/建议</strong>：二手 GPU 服务器验货，顺序比工具更重要——先排除不可逆的硬件损伤，再谈性能和价格。V100 适合预算有限、能接受 sm_70 兼容性风险的场景；A100 更适合需要 BF16、MIG 和更高带宽的生产环境；RTX 4090 则是单卡性价比路线，别硬套服务器形态。把 ECC、显存、NVLink、温度和电源这五项跑透，基本能避开九成坑。</p>
+<p>如果你正在成都或周边，想现场看二手现货或定制 1~8 卡整机，可以在文末联系获取当日配置与报价，先租后买、月付整卡也可以谈。</p>
+    </div>
+
+    <aside class="art-cta">
+      <h2>需要一份具体的配置与报价？</h2>
+      <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
+      <div class="btns">
+        <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
+        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+      </div>
+    </aside>
+
+    <nav class="art-rel">
+      <h2>继续了解</h2>
+      <ul>
+        <li><a href="v100-driver-cuda-pytorch.html">V100 驱动与 CUDA 环境怎么配？版本兼容避坑指南</a></li>
+        <li><a href="cloud-api-vs-local-gpu-tco.html">云 API 还是本地 GPU？18 个月总拥有成本算给你看</a></li>
+      </ul>
+    </nav>
+  </article>
+
+  <footer class="art-foot">
+    <div class="art-wrap">
+      <p><strong>四川积电汇芯科技有限公司</strong> · 成都市武侯区晋阳路432号1栋E馆3楼329室</p>
+      <p>电话/微信：<a href="tel:+8618683421636">186-8342-1636</a> ｜ 邮箱：<a href="mailto:327585419@qq.com">327585419@qq.com</a> ｜ <a href="../index.html">返回官网首页</a></p>
+      <p>本文为通用选型与技术科普内容，行情与参数随货源、批次、软件版本变化，实际配置与价格以沟通确认为准。</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

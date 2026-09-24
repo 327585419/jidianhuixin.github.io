@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7fafc">
+<title>V100 和 A100 怎么选？一张决策表说清差价到底买到了什么 | 四川积电汇芯科技有限公司</title>
+<meta name="description" content="从显存带宽、精度支持、互联、能效到二手价格，给出按场景的明确推荐，不做和稀泥的对比。">
+<meta name="keywords" content="V100 A100 对比,V100 和 A100 选哪个,A100 40G 80G">
+<meta name="author" content="四川积电汇芯科技有限公司">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://327585419.github.io/jidianhuixin.github.io/articles/v100-vs-a100.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="四川积电汇芯科技有限公司">
+<meta property="og:title" content="V100 和 A100 怎么选？一张决策表说清差价到底买到了什么">
+<meta property="og:description" content="从显存带宽、精度支持、互联、能效到二手价格，给出按场景的明确推荐，不做和稀泥的对比。">
+<meta property="og:url" content="https://327585419.github.io/jidianhuixin.github.io/articles/v100-vs-a100.html">
+<meta property="og:image" content="https://327585419.github.io/jidianhuixin.github.io/assets/img/神机宣传图_横版.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="article.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"V100 和 A100 怎么选？一张决策表说清差价到底买到了什么","description":"从显存带宽、精度支持、互联、能效到二手价格，给出按场景的明确推荐，不做和稀泥的对比。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-vs-a100.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"V100 和 A100 怎么选？一张决策表说清差价到底买到了什么","item":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-vs-a100.html"}]}]}</script>
+</head>
+<body>
+<header class="art-top">
+  <div class="container">
+    <a class="art-brand" href="../index.html"><span class="mark">积</span>积电汇芯 · 算力知识库</a>
+    <nav class="art-nav">
+      <a href="index.html">全部文章</a>
+      <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#contact">联系我们</a>
+    </nav>
+  </div>
+</header>
+<main class="art">
+  <article class="art-wrap">
+    <nav class="art-crumb"><a href="../index.html">首页</a> / <a href="index.html">算力知识库</a> / 正文</nav>
+    <h1 class="art-title">V100 和 A100 怎么选？一张决策表说清差价到底买到了什么</h1>
+    <div class="art-meta">
+      <span>发布：2026-09-24</span>
+      <span>分类：选型对比</span>
+      <span>阅读约 5 分钟</span>
+    </div>
+    <div class="art-body">
+<p>买 V100 还是 A100，本质不是“新旧”之争，而是“带宽、精度、显存上限”这三件事值不值那个差价。下面用一张决策表先把结论说死，再拆开讲差价买到了什么。</p>
+<h2>一、先给结论：按预算和任务对号入座</h2>
+<table><thead><tr><th>你的情况</th><th>推荐</th><th>理由</th></tr></thead><tbody><tr><td>预算 1~2 万，做 7B 以下推理、教学演示</td><td>V100 32G 整机</td><td>显存够、生态仍可用，投入最低</td></tr><tr><td>预算 2~4 万，做 13B~32B 量化推理、LoRA 微调</td><td>V100 32G 多卡 或 直接上 A100 40G</td><td>看并发量，带宽敏感就偏 A100</td></tr><tr><td>做全参微调、长上下文训练</td><td>A100 80G SXM4</td><td>带宽和显存是硬门槛，V100 会卡死</td></tr><tr><td>多租户平台、要切分给多人用</td><td>A100（MIG）</td><td>V100 无 MIG，只能整卡分配</td></tr><tr><td>只跑单机小模型、追求单卡性价比</td><td>RTX 4090</td><td>24G 显存是天花板，无 NVLink</td></tr><tr><td>想先低成本试水、后面再升级</td><td>先租后买 / 月付整卡</td><td>租金抵货款，避免一次性砸钱</td></tr></tbody></table>
+<p>一句话：<strong>带宽敏感、要多租户、要 BF16，选 A100；预算紧、任务轻、能接受 FP16 混合精度，V100 仍是能打的过渡卡。</strong></p>
+<h2>二、差价的核心：带宽和精度</h2>
+<p>V100 是 HBM2、4096-bit、约 900GB/s。A100 40G 约 1555GB/s，80G 约 2039GB/s（SXM4 口径；PCIe 版带宽和功耗都更低，对比时必须写清口径）。这个差距在推理 decode 阶段、大 batch 训练、长序列注意力上会直接体现为吞吐差，不是纸面数字。</p>
+<p>精度上，V100 只支持 FP16 混合精度，<strong>不支持 BF16、不支持 FP8、无 MIG</strong>。A100 支持 BF16、TF32，部分路径支持 FP8，还有 MIG 多实例。BF16 的意义是训练更稳、不用反复调 loss scale；TF32 让 FP32 训练几乎免费提速；MIG 能把一张卡切成多个隔离实例，多租户和教学平台非常实用——这三点 V100 都给不了。</p>
+<p>还要注意软件侧：主流新版 PyTorch / vLLM 已逐步淡化对 sm_70（V100）的官方支持，实际能不能跑、跑多快，<strong>取决于版本组合，部署前需实测确认</strong>，别信“肯定能跑”。</p>
+<h2>三、价格与残值：便宜是有代价的</h2>
+<p>截至 2026 年，二手行情仅供参考、以当日货源为准：V100 32G SXM2 拆机卡约 3000~6000 元，32G PCIe 约 6000~9000 元，九成新整机约 1.8 万~2.3 万元；云上 V100 实例月付约 3800 元级，租用约 0.16 美元/GPU/小时起。A100 的整机和单卡投入明显更高，具体差价随 40G/80G、SXM4/PCIe 波动很大。</p>
+<p>残值才是关键：V100 已进入生命周期尾段，三年后处置难度大、接盘人少；A100 仍是主流训练卡，二手流动性好得多。所以“V100 便宜”要算上三年后的折旧和出手难度，不能只看买入价。</p>
+<h2>四、典型场景怎么选</h2>
+<ul>
+<li><strong>推理服务</strong>：7B 以下量化模型，V100 32G 够用；13B 以上或高并发，A100 的带宽优势直接换成 QPS。</li>
+<li><strong>LoRA 微调</strong>：V100 能跑小模型 LoRA，但 BF16 缺失会让部分新框架适配变麻烦；A100 更省心。</li>
+<li><strong>全参微调</strong>：直接 A100 80G，V100 显存和带宽都不够，硬上就是浪费时间。</li>
+<li><strong>教学平台</strong>：要多人隔离就 A100 的 MIG；只是单人实验，V100 整机性价比高。</li>
+</ul>
+<h2>五、什么时候“先买 V100 过渡”是理性的</h2>
+<p>理性：预算确实有限、任务明确在 7B 以下、能接受 FP16、且计划 1~2 年内升级——这时 V100 是低风险跳板。浪费：任务已经要全参微调、要多租户、要 BF16，却为了省钱买 V100，最后跑不动再换，等于花两遍钱。</p>
+<h2>结论/建议</h2>
+<p>选型就三问：模型多大、要不要 BF16/MIG、三年后要不要出手。答案偏“大、要、要”，直接上 A100；答案偏“小、不要、无所谓”，V100 32G 整机是务实的过渡。拿不准就先租后买，用真实负载验证再决定。</p>
+<p>需要具体配置单和当日报价，可在文末联系获取，按你的模型和预算给一套可落地的方案。</p>
+    </div>
+
+    <aside class="art-cta">
+      <h2>需要一份具体的配置与报价？</h2>
+      <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
+      <div class="btns">
+        <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
+        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+      </div>
+    </aside>
+
+    <nav class="art-rel">
+      <h2>继续了解</h2>
+      <ul>
+        <li><a href="v100-pcie-vs-sxm2.html">V100 PCIe 和 SXM2 有什么区别？买错装不进机箱</a></li>
+        <li><a href="local-llm-vram-requirement.html">本地部署大模型要多少显存？一份可以照着算的对照表</a></li>
+      </ul>
+    </nav>
+  </article>
+
+  <footer class="art-foot">
+    <div class="art-wrap">
+      <p><strong>四川积电汇芯科技有限公司</strong> · 成都市武侯区晋阳路432号1栋E馆3楼329室</p>
+      <p>电话/微信：<a href="tel:+8618683421636">186-8342-1636</a> ｜ 邮箱：<a href="mailto:327585419@qq.com">327585419@qq.com</a> ｜ <a href="../index.html">返回官网首页</a></p>
+      <p>本文为通用选型与技术科普内容，行情与参数随货源、批次、软件版本变化，实际配置与价格以沟通确认为准。</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

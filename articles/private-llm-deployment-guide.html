@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7fafc">
+<title>企业本地大模型私有化部署全流程：从选型到验收 | 四川积电汇芯科技有限公司</title>
+<meta name="description" content="把项目拆成需求梳理、算力选型、环境交付、验收测试四步，附一份可用的验收指标清单。">
+<meta name="keywords" content="大模型 私有化部署,企业 本地部署 大模型,私有化 AI 方案">
+<meta name="author" content="四川积电汇芯科技有限公司">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://327585419.github.io/jidianhuixin.github.io/articles/private-llm-deployment-guide.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="四川积电汇芯科技有限公司">
+<meta property="og:title" content="企业本地大模型私有化部署全流程：从选型到验收">
+<meta property="og:description" content="把项目拆成需求梳理、算力选型、环境交付、验收测试四步，附一份可用的验收指标清单。">
+<meta property="og:url" content="https://327585419.github.io/jidianhuixin.github.io/articles/private-llm-deployment-guide.html">
+<meta property="og:image" content="https://327585419.github.io/jidianhuixin.github.io/assets/img/神机宣传图_横版.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="article.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"企业本地大模型私有化部署全流程：从选型到验收","description":"把项目拆成需求梳理、算力选型、环境交付、验收测试四步，附一份可用的验收指标清单。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/private-llm-deployment-guide.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"企业本地大模型私有化部署全流程：从选型到验收","item":"https://327585419.github.io/jidianhuixin.github.io/articles/private-llm-deployment-guide.html"}]}]}</script>
+</head>
+<body>
+<header class="art-top">
+  <div class="container">
+    <a class="art-brand" href="../index.html"><span class="mark">积</span>积电汇芯 · 算力知识库</a>
+    <nav class="art-nav">
+      <a href="index.html">全部文章</a>
+      <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#contact">联系我们</a>
+    </nav>
+  </div>
+</header>
+<main class="art">
+  <article class="art-wrap">
+    <nav class="art-crumb"><a href="../index.html">首页</a> / <a href="index.html">算力知识库</a> / 正文</nav>
+    <h1 class="art-title">企业本地大模型私有化部署全流程：从选型到验收</h1>
+    <div class="art-meta">
+      <span>发布：2026-09-24</span>
+      <span>分类：部署实操</span>
+      <span>阅读约 7 分钟</span>
+    </div>
+    <div class="art-body">
+<h2>需求梳理：把“我们要 AI”翻译成硬指标</h2>
+<p>企业里最常见的一句话是“我们也想上大模型”，但这句话不能直接变成采购单。要落地，先把它拆成四组数字：模型、并发、延迟、数据。</p>
+<p>模型决定显存下限。7B 参数模型 FP16 权重约 14GB，INT8 约 7GB，INT4 约 4GB；70B 模型 FP16 权重约 140GB，INT4 也要约 35GB。注意这只是权重，实际还要留 KV Cache 和框架开销，通常按权重的 1.2~1.5 倍估算总显存。</p>
+<p>并发决定吞吐。要明确“同时在线多少人、峰值每秒几个请求、平均输入输出多少 token”。延迟则要区分首字延迟（TTFT）和每 token 生成时间（TPOT），内部知识库问答通常要求首字 1~3 秒内，客服类要更快。</p>
+<p>数据决定合规等级。是公开资料、内部文档，还是含个人信息和商业机密？这直接决定要不要内网隔离、要不要审计留痕。</p>
+<p><strong>可执行结论</strong>：先写一页纸的需求表，列出模型规格、峰值并发、TTFT/TPOT 目标、数据密级。没有这页纸，后面所有选型都是猜。</p>
+<h2>算力选型：按模型规模与并发反推显存与卡数</h2>
+<p>显存估算可以用一个粗公式：总显存 ≈ 权重 + KV Cache × 并发 + 框架开销。以 7B INT4 为例，权重约 4GB，单条 4K 上下文 KV Cache 约 0.5~1GB，若并发 8，则需 4 + 8×0.8 + 2 ≈ 12.4GB，单张 V100 32G 就能跑。若换 70B INT4，权重约 35GB，单卡 32G 已不够，至少双卡或上 A100 80G。</p>
+<table><thead><tr><th>场景</th><th>参考配置</th><th>说明</th></tr></thead><tbody><tr><td>7B INT4，低并发内测</td><td>单张 V100 32G</td><td>需实测确认框架版本</td></tr><tr><td>13B~14B INT4，10 人级</td><td>单张 A100 40G 或双 V100 32G</td><td>双卡注意互联与显存切分</td></tr><tr><td>70B INT4，部门级</td><td>2×A100 80G 或 4×V100 32G</td><td>多卡并行需实测吞吐</td></tr><tr><td>高并发在线服务</td><td>多卡 A100/H100 级</td><td>按 QPS 压测扩容</td></tr></tbody></table>
+<p>V100 是 Volta 架构，16GB/32GB HBM2，带宽 900GB/s，FP16 张量核心约 125 TFLOPS，不支持 BF16 和 FP8，主流新版 PyTorch/vLLM 对 sm_70 的支持在淡化，部署前必须实测确认版本组合。A100 支持 BF16、TF32 和 MIG，80GB 版带宽约 2039GB/s，对比时要写清是 SXM4 还是 PCIe，两者带宽与功耗不同。RTX 4090 单卡 24GB、带宽约 1008GB/s，性价比高，但无 NVLink、无 ECC，多卡并行和服务器形态受限。</p>
+<p><strong>行情参考</strong>：截至 2026 年，二手 V100 32G SXM2 拆机卡约 3000~6000 元，PCIe 版约 6000~9000 元，九成新整机约 1.8 万~2.3 万元；云上 V100 实例月付约 3800 元级，按小时约 0.16 美元/GPU/小时起。以上仅供参考，以当日货源和云厂商报价为准。</p>
+<h2>环境交付：系统、驱动、框架、网关、权限与日志</h2>
+<p>硬件到位只是开始，环境交付才是能不能用的分水岭。标准动作包括：</p>
+<ul>
+<li>操作系统与驱动：Ubuntu LTS + 对应 NVIDIA Driver + CUDA/cuDNN，版本要和推理框架匹配。</li>
+<li>推理框架：vLLM、TGI、TensorRT-LLM 等按模型和卡型选择，V100 需锁定兼容版本。</li>
+<li>网关：统一 API 入口，做鉴权、限流、路由和模型切换。</li>
+<li>权限：按部门/角色分配模型和额度，避免“谁都能调”。</li>
+<li>日志：请求日志、审计日志、错误日志分离，保留周期按合规要求设定。</li>
+</ul>
+<p>四川积电汇芯科技有限公司在这类交付中提供系统与 CUDA 环境安装、模型部署调试、上门/远程交付和技术支持，成都可面交/上门，外地顺丰保价。其主营包括 V100/A100 GPU 服务器与单卡销售、1~8 卡定制整机、本地大模型私有化部署、算力服务器升级与运维，也有二手现货和“先租后买 / 月付整卡服务”，租金可抵货款。</p>
+<h2>验收：用可量化指标说话</h2>
+<p>验收不能只看“能回答”，要压测出数字。建议至少覆盖：</p>
+<ul>
+<li>首字延迟（TTFT）：内部问答目标 ≤ 2 秒，客服类 ≤ 1 秒。</li>
+<li>并发数：在目标 TPOT 下稳定支撑的并发请求数。</li>
+<li>可用性：连续 72 小时压测，服务可用性 ≥ 99.5%。</li>
+<li>吞吐：tokens/s 和 QPS，按真实输入输出长度测。</li>
+<li>稳定性：显存无泄漏，长上下文不崩。</li>
+</ul>
+<p>验收报告要写清测试工具、模型版本、量化方式、卡型和驱动版本。任何“感觉挺快”都不算数。</p>
+<h2>数据安全、合规与长期运维</h2>
+<p>安全落地动作要具体：内网隔离，推理服务不直接暴露公网；审计留痕，记录谁在什么时候调了什么模型；密钥管理，API Key 定期轮换、最小权限；数据不出域，敏感数据不进第三方接口。</p>
+<p>长期运维三件事：监控（GPU 利用率、显存、温度、延迟、错误率）、备份（模型权重、配置、日志）、升级策略（模型与驱动先在小环境验证，再灰度）。V100 这类老卡升级要格外谨慎，新框架可能不再支持 sm_70。</p>
+<p><strong>结论/建议</strong>：本地大模型私有化不是买张卡就完事，而是需求、算力、交付、验收、运维五步闭环。预算有限可先租后买或月付整卡，验证跑通再转采购；数据敏感就直接内网隔离加审计。配置和报价随货源与版本波动，建议按当日实际情况确认。</p>
+<p>如需针对你的模型和并发做一版配置清单与报价，可在文末联系获取。</p>
+    </div>
+
+    <aside class="art-cta">
+      <h2>需要一份具体的配置与报价？</h2>
+      <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
+      <div class="btns">
+        <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
+        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+      </div>
+    </aside>
+
+    <nav class="art-rel">
+      <h2>继续了解</h2>
+      <ul>
+        <li><a href="chengdu-gpu-server-local-supplier.html">成都买 GPU 服务器怎么找靠谱供应商？面交、验机与售后</a></li>
+        <li><a href="v100-16g-vs-32g.html">V100 16G 和 32G 差在哪？为什么便宜的那张更容易后悔</a></li>
+      </ul>
+    </nav>
+  </article>
+
+  <footer class="art-foot">
+    <div class="art-wrap">
+      <p><strong>四川积电汇芯科技有限公司</strong> · 成都市武侯区晋阳路432号1栋E馆3楼329室</p>
+      <p>电话/微信：<a href="tel:+8618683421636">186-8342-1636</a> ｜ 邮箱：<a href="mailto:327585419@qq.com">327585419@qq.com</a> ｜ <a href="../index.html">返回官网首页</a></p>
+      <p>本文为通用选型与技术科普内容，行情与参数随货源、批次、软件版本变化，实际配置与价格以沟通确认为准。</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

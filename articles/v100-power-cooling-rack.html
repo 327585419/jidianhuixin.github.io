@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7fafc">
+<title>V100 服务器功耗、散热与机位：上架前必须算清的三件事 | 四川积电汇芯科技有限公司</title>
+<meta name="description" content="功率预算、风道与噪音、机位与配电，避免机器到了却放不进、开不了机。">
+<meta name="keywords" content="V100 功耗,GPU服务器 散热,服务器 机位 电费">
+<meta name="author" content="四川积电汇芯科技有限公司">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://327585419.github.io/jidianhuixin.github.io/articles/v100-power-cooling-rack.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="四川积电汇芯科技有限公司">
+<meta property="og:title" content="V100 服务器功耗、散热与机位：上架前必须算清的三件事">
+<meta property="og:description" content="功率预算、风道与噪音、机位与配电，避免机器到了却放不进、开不了机。">
+<meta property="og:url" content="https://327585419.github.io/jidianhuixin.github.io/articles/v100-power-cooling-rack.html">
+<meta property="og:image" content="https://327585419.github.io/jidianhuixin.github.io/assets/img/神机宣传图_横版.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="article.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"V100 服务器功耗、散热与机位：上架前必须算清的三件事","description":"功率预算、风道与噪音、机位与配电，避免机器到了却放不进、开不了机。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-power-cooling-rack.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"V100 服务器功耗、散热与机位：上架前必须算清的三件事","item":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-power-cooling-rack.html"}]}]}</script>
+</head>
+<body>
+<header class="art-top">
+  <div class="container">
+    <a class="art-brand" href="../index.html"><span class="mark">积</span>积电汇芯 · 算力知识库</a>
+    <nav class="art-nav">
+      <a href="index.html">全部文章</a>
+      <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#contact">联系我们</a>
+    </nav>
+  </div>
+</header>
+<main class="art">
+  <article class="art-wrap">
+    <nav class="art-crumb"><a href="../index.html">首页</a> / <a href="index.html">算力知识库</a> / 正文</nav>
+    <h1 class="art-title">V100 服务器功耗、散热与机位：上架前必须算清的三件事</h1>
+    <div class="art-meta">
+      <span>发布：2026-09-24</span>
+      <span>分类：部署实操</span>
+      <span>阅读约 7 分钟</span>
+    </div>
+    <div class="art-body">
+<h2>功率账：先把电算明白，再谈上架</h2>
+<p>V100 有两个功耗口径，别混为一谈。PCIe 双宽版约 250W，SXM2 版约 300W，都是<strong>被动散热</strong>，靠服务器风道压。单卡看着不吓人，但整机不是这么算的。</p>
+<p>一台 4 卡 V100 服务器，GPU 峰值 1000~1200W，加上双路 CPU（约 300~400W）、内存与硬盘（约 100W）、风扇与主板损耗（约 100W），整机峰值轻松摸到 1500~1800W。8 卡 SXM2 机型更狠，GPU 一项就是 2400W，整机峰值常见 3000~3500W 区间。</p>
+<p>关键在“峰值”和“持续”不是一回事。跑推理时 GPU 利用率可能只有 40~60%，但训练或批量任务会长时间顶满。电源要按<strong>峰值留 20~30% 余量</strong>，原因有三：一是电源在 50~80% 负载区间效率最高、发热最小；二是电容老化后输出能力会衰减；三是瞬时电流尖峰（GPU 负载突变）容易触发保护。1500W 峰值的机器，别配 1600W 电源，直接上 2000W 冗余更稳。</p>
+<h2>散热路线：机房风道 vs 办公室静音改造</h2>
+<p>V100 是服务器卡，被动散热是硬约束。两条路，代价完全不同。</p>
+<table><thead><tr><th>维度</th><th>机房标准风道</th><th>办公室静音改造</th></tr></thead><tbody><tr><td>机箱</td><td>2U/4U 服务器原装</td><td>塔式/静音机箱+导风罩</td></tr><tr><td>风扇</td><td>高转速暴力扇</td><td>低转速大尺寸风扇</td></tr><tr><td>噪音</td><td>65~75 dB(A)</td><td>目标压到 45~55 dB(A)</td></tr><tr><td>散热余量</td><td>充足</td><td>紧张，需实测</td></tr><tr><td>红线</td><td>进风温度≤25℃</td><td>单卡被动卡改主动散热风险高</td></tr></tbody></table>
+<p>机房路线省心，但要有 2U 机位、足够风压、空调 24 小时运行。办公室路线要接受一个现实：<strong>被动卡塞进静音机箱，散热余量会被吃掉一大截</strong>，夏天容易撞温度墙降频。改造可以做，但必须实测每张卡的进风温度和满载结温，不能凭感觉。</p>
+<h2>噪音现实：2U 服务器到底有多吵</h2>
+<p>2U 服务器满载风扇转速上来，1 米处 65~75 dB(A) 是常态，相当于吸尘器或繁忙路口的量级。这个声音放在办公室，基本没法开电话会。</p>
+<p>办公室应对的可行做法：</p>
+<ul>
+<li>单独隔间或储藏室放置，门做隔音处理</li>
+<li>机柜加装导风消音棉，但注意别堵住进风</li>
+<li>换 4U 大机箱配低速风扇，牺牲部分密度换安静</li>
+<li>实在压不下来，考虑托管到本地机房，而非硬扛</li>
+</ul>
+<h2>配电与插座：别让墙插成为瓶颈</h2>
+<p>中国大陆家用插座常见 10A/220V，理论 2200W，但<strong>长期满载不建议超过 80%</strong>，即 1700W 左右。一台 4 卡 V100 整机峰值就逼近这个数，再算上显示器、交换机，很容易跳闸。</p>
+<p>小型机房要确认：</p>
+<ul>
+<li>线路是 16A 还是 10A，空开容量多少</li>
+<li>是否单独回路，别和空调共用</li>
+<li>插座类型（国标 10A/16A、C13/C19）</li>
+<li>有无 UPS，断电对训练任务是灾难</li>
+</ul>
+<h2>电费估算：方法比数字重要</h2>
+<p>公式很简单：<strong>功耗(kW) × 小时 × 电价 = 电费</strong>。</p>
+<p>以 4 卡 V100 整机持续 1200W、每天跑 10 小时、电价 0.8 元/度为例：</p>
+<table><thead><tr><th>电价(元/度)</th><th>每天(元)</th><th>每月(元)</th></tr></thead><tbody><tr><td>0.6</td><td>7.2</td><td>216</td></tr><tr><td>0.8</td><td>9.6</td><td>288</td></tr><tr><td>1.0</td><td>12.0</td><td>360</td></tr><tr><td>1.3</td><td>15.6</td><td>468</td></tr></tbody></table>
+<p>电价敏感度很高，商业电价和居民电价能差一倍。跑满 24 小时的场景，月电费直接翻倍到 500~900 元级。这笔账要和云上 V100 实例（月付约 3800 元级，以云厂商当期报价为准）对比着看。</p>
+<h2>上架前检查清单</h2>
+<ul>
+<li>[ ] 确认卡型：PCIe 还是 SXM2，功耗与散热方案不同</li>
+<li>[ ] 整机峰值功耗实测或按规格累加，电源留 20~30% 余量</li>
+<li>[ ] 进风温度、满载结温实测，确认不降频</li>
+<li>[ ] 线路空开容量、插座类型、是否独立回路</li>
+<li>[ ] 噪音水平实测，确认办公环境可接受</li>
+<li>[ ] 软件栈验证：sm_70 在新版 PyTorch/vLLM 的支持情况需实测确认</li>
+<li>[ ] 显存选型：16GB 还是 32GB，按模型规模定</li>
+<li>[ ] 预算对比：自购 vs 云租 vs 先租后买</li>
+</ul>
+<h2>结论与建议</h2>
+<p>V100 在 2026 年仍是性价比可用的推理卡，但它的功耗、散热、噪音、配电四笔账必须在上架前算清。机房路线省心但要有条件，办公室路线能做但要接受散热余量的妥协。电费按“功耗×时长×电价”估，注意电价敏感度。截至 2026 年，二手 V100 32G SXM2 拆机卡约 3000~6000 元，32G PCIe 约 6000~9000 元，32G 整机（九成新）约 1.8 万~2.3 万元，具体以当日货源为准。</p>
+<p>如果你正在成都或周边，需要按实际机位、配电和散热条件做配置核算，可以在文末联系我们获取配置建议与报价——四川积电汇芯科技有限公司，成都市武侯区晋阳路432号1栋E馆3楼329室，电话/微信 186-8342-1636，主营 V100/A100 服务器与单卡、GPU 服务器定制（1~8 卡）、本地大模型私有化部署与运维，成都可面交/上门，外地顺丰保价，也提供先租后买/月付整卡服务。</p>
+    </div>
+
+    <aside class="art-cta">
+      <h2>需要一份具体的配置与报价？</h2>
+      <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
+      <div class="btns">
+        <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
+        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+      </div>
+    </aside>
+
+    <nav class="art-rel">
+      <h2>继续了解</h2>
+      <ul>
+        <li><a href="gpu-server-selection-guide.html">GPU 服务器怎么选？1/2/4/8 卡配置选型与匹配场景</a></li>
+        <li><a href="llm-inference-throughput-anatomy.html">推理速度为什么和你想的不一样？TTFT、吞吐与并发的拆解</a></li>
+      </ul>
+    </nav>
+  </article>
+
+  <footer class="art-foot">
+    <div class="art-wrap">
+      <p><strong>四川积电汇芯科技有限公司</strong> · 成都市武侯区晋阳路432号1栋E馆3楼329室</p>
+      <p>电话/微信：<a href="tel:+8618683421636">186-8342-1636</a> ｜ 邮箱：<a href="mailto:327585419@qq.com">327585419@qq.com</a> ｜ <a href="../index.html">返回官网首页</a></p>
+      <p>本文为通用选型与技术科普内容，行情与参数随货源、批次、软件版本变化，实际配置与价格以沟通确认为准。</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

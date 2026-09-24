@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7fafc">
+<title>用 V100 微调大模型可行吗？LoRA 与全参微调的显存账 | 四川积电汇芯科技有限公司</title>
+<meta name="description" content="明确 V100 能做哪种微调、做不了哪种，并给出 LoRA 场景的配置与预期。">
+<meta name="keywords" content="V100 微调,LoRA 显存,V100 训练大模型">
+<meta name="author" content="四川积电汇芯科技有限公司">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://327585419.github.io/jidianhuixin.github.io/articles/v100-finetune-lora.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="四川积电汇芯科技有限公司">
+<meta property="og:title" content="用 V100 微调大模型可行吗？LoRA 与全参微调的显存账">
+<meta property="og:description" content="明确 V100 能做哪种微调、做不了哪种，并给出 LoRA 场景的配置与预期。">
+<meta property="og:url" content="https://327585419.github.io/jidianhuixin.github.io/articles/v100-finetune-lora.html">
+<meta property="og:image" content="https://327585419.github.io/jidianhuixin.github.io/assets/img/神机宣传图_横版.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="article.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"用 V100 微调大模型可行吗？LoRA 与全参微调的显存账","description":"明确 V100 能做哪种微调、做不了哪种，并给出 LoRA 场景的配置与预期。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-finetune-lora.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"用 V100 微调大模型可行吗？LoRA 与全参微调的显存账","item":"https://327585419.github.io/jidianhuixin.github.io/articles/v100-finetune-lora.html"}]}]}</script>
+</head>
+<body>
+<header class="art-top">
+  <div class="container">
+    <a class="art-brand" href="../index.html"><span class="mark">积</span>积电汇芯 · 算力知识库</a>
+    <nav class="art-nav">
+      <a href="index.html">全部文章</a>
+      <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#contact">联系我们</a>
+    </nav>
+  </div>
+</header>
+<main class="art">
+  <article class="art-wrap">
+    <nav class="art-crumb"><a href="../index.html">首页</a> / <a href="index.html">算力知识库</a> / 正文</nav>
+    <h1 class="art-title">用 V100 微调大模型可行吗？LoRA 与全参微调的显存账</h1>
+    <div class="art-meta">
+      <span>发布：2026-09-24</span>
+      <span>分类：部署实操</span>
+      <span>阅读约 7 分钟</span>
+    </div>
+    <div class="art-body">
+<h2>结论先给：LoRA 能跑，全参微调别硬上</h2>
+<p>截至 2026 年，V100（Volta，2017）仍是二手市场里最便宜的 32GB HBM2 计算卡。它支持 FP16 混合精度、有张量核心（FP16 约 125 TFLOPS，16GB PCIe 版约 112 TFLOPS），但<strong>不支持 BF16、不支持 FP8、没有 MIG</strong>。这三点决定了它在微调场景里的边界。</p>
+<p>一句话结论：<strong>LoRA / QLoRA 在 V100 上可行，7B~13B 级别单卡 32GB 就能开练；全参微调在多数参数规模上不划算，不是"能不能跑"，而是"跑起来值不值"。</strong></p>
+<h2>显存账本：为什么全参微调是权重的数倍</h2>
+<p>训练显存大致由四块构成：</p>
+<table><thead><tr><th>组成</th><th>全参微调</th><th>LoRA</th></tr></thead><tbody><tr><td>权重</td><td>参数量 × 2 字节（FP16）</td><td>同左，但冻结</td></tr><tr><td>梯度</td><td>参数量 × 2 字节</td><td>仅适配器</td></tr><tr><td>优化器状态</td><td>Adam 约 参数量 × 8 字节（FP32 动量+方差）</td><td>仅适配器</td></tr><tr><td>激活</td><td>与 batch、序列长度、层数强相关</td><td>同左，可梯度检查点压缩</td></tr></tbody></table>
+<p>粗算：FP16 权重 2 字节，加上梯度 2 字节、Adam 状态 8 字节，合计约 <strong>12 字节/参数</strong>，是纯权重的 6 倍左右。7B 模型光这部分就 ~84GB，还没算激活。所以全参微调 7B 至少需要多卡 80GB 级设备，V100 32GB 单卡直接出局。</p>
+<h2>LoRA 为什么省：显存与参数量解耦</h2>
+<p>LoRA 冻结主干，只在注意力（及可选 MLP）层注入低秩矩阵。可训练参数通常只占原模型的 0.1%~1%，优化器状态和梯度随之缩小两个数量级。主干权重仍占 2 字节/参数，但不再产生梯度与优化器开销。</p>
+<ul>
+<li>7B 模型 FP16 权重约 14GB，加适配器与激活，<strong>单卡 32GB V100 可跑</strong>（序列长度和 batch 需实测确认）。</li>
+<li>QLoRA 再把主干量化到 4-bit，权重压到 ~4GB，13B 也能塞进 32GB，代价是训练变慢、精度需验证。</li>
+<li>多卡时，SXM2 版 V100 支持 NVLink 2.0（6 链路、约 300GB/s 双向聚合），PCIe 版只能走 PCIe 3.0 x16，通信是瓶颈。</li>
+</ul>
+<h2>V100 的坑：没有 BF16，只能 FP16</h2>
+<p>BF16 动态范围大，训练时基本不用管溢出；V100 不支持，只能 FP16，就必须开<strong>梯度缩放（GradScaler）</strong>，并留意 loss scale 频繁回退、NaN 等问题。建议：</p>
+<ul>
+<li>用 <code>torch.cuda.amp</code> 混合精度 + 动态 loss scale；</li>
+<li>学习率别照搬 BF16 的配方，适当调低；</li>
+<li>关键层（如 layernorm、softmax）保持 FP32；</li>
+<li>长序列训练优先开梯度检查点，用时间换显存。</li>
+</ul>
+<p>另外，主流新版 PyTorch / vLLM 已逐步淡化对 sm_70 的官方支持，<strong>实际可用性取决于版本组合，部署前需实测确认</strong>，别直接上最新版。</p>
+<h2>租还是买：看你的训练节奏</h2>
+<table><thead><tr><th>场景</th><th>建议</th></tr></thead><tbody><tr><td>一周内跑几次实验、数据 < 10 万条</td><td>云上 V100 实例，月付约 3800 元级，或约 0.16 美元/GPU/小时起（以云厂商当期报价为准）</td></tr><tr><td>长期迭代、数据敏感、要私有化</td><td>买整机更划算</td></tr><tr><td>只想先试水</td><td>先租后买 / 月付整卡，租金可抵货款</td></tr></tbody></table>
+<p>二手行情参考（截至 2026 年，仅供参考、以当日货源为准）：V100 32G SXM2 拆机卡约 3000~6000 元；32G PCIe 约 6000~9000 元；32G 整机（九成新）约 1.8 万~2.3 万元。对比 RTX 4090：24GB GDDR6X、约 1008GB/s 带宽，单卡性价比高，但无 NVLink、无 ECC、非服务器风道，多卡扩展受限。</p>
+<h2>两套参考配置</h2>
+<p><strong>入门单卡 LoRA</strong></p>
+<ul>
+<li>1× V100 32GB（PCIe 或 SXM2）</li>
+<li>7B 模型 + LoRA，FP16 + 梯度检查点</li>
+<li>序列 1024~2048，batch 视实测调整</li>
+<li>适合验证流程、小数据集快速迭代</li>
+</ul>
+<p><strong>多卡微调</strong></p>
+<ul>
+<li>4× V100 32GB SXM2 + NVLink/NVSwitch 整机</li>
+<li>13B 级 LoRA 或 7B 全参（需实测确认显存与并行策略）</li>
+<li>配合 DeepSpeed / FSDP，注意 PCIe 版通信瓶颈</li>
+<li>适合稳定产出、私有化部署</li>
+</ul>
+<h2>结论与建议</h2>
+<p>V100 不是过时货，而是"够用且便宜"的推理与 LoRA 微调平台。它的天花板很明确：无 BF16、无 FP8、无 MIG，全参微调基本别想。把 LoRA / QLoRA 用熟，配合 FP16 梯度缩放和梯度检查点，7B~13B 的定制需求完全能接住。真要全参，就上 A100 80GB 级设备，别在 V100 上硬扛。</p>
+<p>具体到你的模型规模和数据量，配置差别很大——文末可联系获取适配的整机配置与当日报价，成都可面交/上门，外地顺丰保价。</p>
+    </div>
+
+    <aside class="art-cta">
+      <h2>需要一份具体的配置与报价？</h2>
+      <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
+      <div class="btns">
+        <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
+        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+      </div>
+    </aside>
+
+    <nav class="art-rel">
+      <h2>继续了解</h2>
+      <ul>
+        <li><a href="local-llm-vram-requirement.html">本地部署大模型要多少显存？一份可以照着算的对照表</a></li>
+        <li><a href="v100-vs-rtx4090.html">二手 V100 和 RTX 4090 怎么选？别只看算力这一个数</a></li>
+      </ul>
+    </nav>
+  </article>
+
+  <footer class="art-foot">
+    <div class="art-wrap">
+      <p><strong>四川积电汇芯科技有限公司</strong> · 成都市武侯区晋阳路432号1栋E馆3楼329室</p>
+      <p>电话/微信：<a href="tel:+8618683421636">186-8342-1636</a> ｜ 邮箱：<a href="mailto:327585419@qq.com">327585419@qq.com</a> ｜ <a href="../index.html">返回官网首页</a></p>
+      <p>本文为通用选型与技术科普内容，行情与参数随货源、批次、软件版本变化，实际配置与价格以沟通确认为准。</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

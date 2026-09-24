@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7fafc">
+<title>云 API 还是本地 GPU？18 个月总拥有成本算给你看 | 四川积电汇芯科技有限公司</title>
+<meta name="description" content="把&quot;按量付费的弹性&quot;与&quot;一次性投入的确定性&quot;放到同一张表里算，给出回本临界点。">
+<meta name="keywords" content="云API 本地部署 成本,GPU 服务器 回本,大模型 成本对比">
+<meta name="author" content="四川积电汇芯科技有限公司">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://327585419.github.io/jidianhuixin.github.io/articles/cloud-api-vs-local-gpu-tco.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="四川积电汇芯科技有限公司">
+<meta property="og:title" content="云 API 还是本地 GPU？18 个月总拥有成本算给你看">
+<meta property="og:description" content="把&quot;按量付费的弹性&quot;与&quot;一次性投入的确定性&quot;放到同一张表里算，给出回本临界点。">
+<meta property="og:url" content="https://327585419.github.io/jidianhuixin.github.io/articles/cloud-api-vs-local-gpu-tco.html">
+<meta property="og:image" content="https://327585419.github.io/jidianhuixin.github.io/assets/img/神机宣传图_横版.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="article.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"云 API 还是本地 GPU？18 个月总拥有成本算给你看","description":"把\"按量付费的弹性\"与\"一次性投入的确定性\"放到同一张表里算，给出回本临界点。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/cloud-api-vs-local-gpu-tco.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"云 API 还是本地 GPU？18 个月总拥有成本算给你看","item":"https://327585419.github.io/jidianhuixin.github.io/articles/cloud-api-vs-local-gpu-tco.html"}]}]}</script>
+</head>
+<body>
+<header class="art-top">
+  <div class="container">
+    <a class="art-brand" href="../index.html"><span class="mark">积</span>积电汇芯 · 算力知识库</a>
+    <nav class="art-nav">
+      <a href="index.html">全部文章</a>
+      <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#contact">联系我们</a>
+    </nav>
+  </div>
+</header>
+<main class="art">
+  <article class="art-wrap">
+    <nav class="art-crumb"><a href="../index.html">首页</a> / <a href="index.html">算力知识库</a> / 正文</nav>
+    <h1 class="art-title">云 API 还是本地 GPU？18 个月总拥有成本算给你看</h1>
+    <div class="art-meta">
+      <span>发布：2026-09-24</span>
+      <span>分类：成本与回本</span>
+      <span>阅读约 7 分钟</span>
+    </div>
+    <div class="art-body">
+<p>先说结论：当你的推理调用量稳定跑起来、单卡日均有效利用率能到 40% 以上时，本地 GPU 的 18 个月总拥有成本（TCO）通常明显低于云 API；但如果只是零星调用、波峰波谷差得离谱，或者团队没人能搞定驱动和推理框架，云 API 反而更省心也更省钱。关键变量不是"云贵还是本地贵"，而是"你一年到底能用掉多少 GPU 小时"。</p>
+<h2>一、把成本项算全，别只盯硬件价</h2>
+<p>很多人比价只比"一张卡多少钱 vs 云上每小时多少钱"，这必然算错。本地部署的真实成本至少有六块：</p>
+<ul>
+<li><strong>硬件采购</strong>：卡、整机、主板/CPU/内存/硬盘、电源、机箱风道。V100 是被动散热，必须靠服务器风道，塞进普通台式机箱会过热降频。</li>
+<li><strong>电费</strong>：按整机功耗算，不是只算卡。V100 PCIe 约 250W、SXM2 约 300W，加 CPU、内存、风扇，整机 500~800W 很常见。</li>
+<li><strong>机位与噪音</strong>：放办公室要考虑噪音和散热，放 IDC 要托管费，放家里基本不现实。</li>
+<li><strong>运维人力</strong>：装系统、装 CUDA、调模型、处理掉卡、换硅脂、盯温度，都是时间。</li>
+<li><strong>闲置率</strong>：买回来跑不满，等于把钱摊在空气上。</li>
+<li><strong>折旧与残值</strong>：V100 是 2017 年的 Volta 架构，CUDA 7.0，残值下滑是确定的。</li>
+</ul>
+<h2>二、一个能直接套用的 TCO 模型</h2>
+<p>18 个月总成本可以写成：</p>
+<p>```</p>
+<p>本地 TCO = 硬件采购 + 电费 + 托管/机位 + 运维人力 + 折旧损失 - 残值</p>
+<p>云 TCO  = 单卡时价 × 日均有效小时 × 540 天</p>
+<p>```</p>
+<p>其中 <code>折旧损失 = 采购价 - 18 个月后残值</code>，<code>电费 = 整机功率(kW) × 小时 × 电价</code>。</p>
+<p>举个可代入的例子（数字为区间示意，<strong>截至 2026 年，二手行情仅供参考，以当日货源为准</strong>）：</p>
+<table><thead><tr><th>项目</th><th>本地（二手 V100 32G 整机）</th><th>云 V100 实例</th></tr></thead><tbody><tr><td>采购/租金</td><td>约 1.8 万~2.3 万元</td><td>约 3800 元/月</td></tr><tr><td>电费</td><td>0.7kW × 12h × 540 × 0.8 元 ≈ 3600 元</td><td>含在租金</td></tr><tr><td>运维</td><td>自管，折人力约 3000~6000 元</td><td>基本免</td></tr><tr><td>18 个月后残值</td><td>约 0.8 万~1.2 万元</td><td>0</td></tr><tr><td><strong>18 个月合计</strong></td><td><strong>约 1.3 万~2.1 万元</strong></td><td><strong>约 6.8 万元</strong></td></tr></tbody></table>
+<p>也就是说，只要这台机器 18 个月里日均能跑 10~12 小时有效负载，本地就划算；如果一天只跑 2 小时，云反而更省。把上面的公式换成你自己的日均小时和当地电价，结论立刻出来。</p>
+<h2>三、非价格因素，往往才是拍板的那一下</h2>
+<p><strong>数据合规</strong>：涉及客户数据、内部文档、医疗或金融语料时，"数据不出内网"经常是硬要求，这时本地私有化部署不是省钱问题，而是能不能做的问题。</p>
+<p><strong>网络延迟</strong>：云 API 多一次公网往返，实时对话、工控、边缘场景对延迟敏感，本地推理的稳定性更好。反过来，如果业务本身就在公网、能容忍几百毫秒，云的优势就回来了。</p>
+<p><strong>技术栈匹配</strong>：V100 支持 FP16 混合精度，不支持 BF16、FP8，也没有 MIG；主流新版 PyTorch/vLLM 对 sm_70 的官方支持在淡化，<strong>具体可用性取决于版本组合，部署前需实测确认</strong>。A100 支持 BF16、TF32、MIG，40GB/80GB 带宽约 1555/2039 GB/s，但对比时务必写清是 SXM4 还是 PCIe，两者带宽和功耗不同。RTX 4090 单卡性价比高、24GB 显存，但不支持 NVLink、无 ECC、非服务器风道，多卡并行和长时间满载要谨慎。</p>
+<h2>四、这几种情况，别自建</h2>
+<ul>
+<li><strong>波峰明显</strong>：白天爆满、夜里归零，本地卡大部分时间在睡觉。</li>
+<li><strong>用量太小</strong>：一个月跑不了几十小时，云 API 直接按量付费最干净。</li>
+<li><strong>缺运维能力</strong>：没人会装 CUDA、调 vLLM、处理掉卡，出故障就停摆。</li>
+<li><strong>模型迭代快</strong>：今天跑 7B，明天要上更大参数，硬件跟不上就得再买。</li>
+</ul>
+<h2>五、混合方案：本地兜底 + 云端弹性</h2>
+<p>比较稳的做法是分工：</p>
+<ul>
+<li><strong>本地</strong>：跑稳定的基线流量、敏感数据、低延迟请求，用 A100 或 V100 整机兜底。</li>
+<li><strong>云端</strong>：扛突发波峰、灰度新模型、临时压测，按量付费。</li>
+<li><strong>路由层</strong>：设一个阈值，本地队列超过水位就溢出到云，平时不烧云的钱。</li>
+</ul>
+<p>这样既拿到本地的合规与成本优势，又不被波峰拖垮。</p>
+<p><strong>结论/建议</strong>：先算清你的日均有效 GPU 小时，再套上面的公式。用量稳定、利用率高、有合规或延迟要求，就上本地；用量小、波峰大、缺运维，就继续用云；拿不准就混合。硬件选型上，V100 适合预算敏感的 FP16 推理，A100 适合 BF16 和更大显存需求，4090 适合单卡轻量场景，具体配置和报价可按你的模型与并发实测后确定。</p>
+<p>如果你正在纠结选 V100 还是 A100、几卡整机怎么配，可以在文末联系获取适配你业务量的配置清单与当期报价。</p>
+    </div>
+
+    <aside class="art-cta">
+      <h2>需要一份具体的配置与报价？</h2>
+      <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
+      <div class="btns">
+        <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
+        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+      </div>
+    </aside>
+
+    <nav class="art-rel">
+      <h2>继续了解</h2>
+      <ul>
+        <li><a href="used-gpu-server-checklist.html">买二手 GPU 服务器怎么验货？一份 30 项现场检查清单</a></li>
+        <li><a href="gpu-server-selection-guide.html">GPU 服务器怎么选？1/2/4/8 卡配置选型与匹配场景</a></li>
+      </ul>
+    </nav>
+  </article>
+
+  <footer class="art-foot">
+    <div class="art-wrap">
+      <p><strong>四川积电汇芯科技有限公司</strong> · 成都市武侯区晋阳路432号1栋E馆3楼329室</p>
+      <p>电话/微信：<a href="tel:+8618683421636">186-8342-1636</a> ｜ 邮箱：<a href="mailto:327585419@qq.com">327585419@qq.com</a> ｜ <a href="../index.html">返回官网首页</a></p>
+      <p>本文为通用选型与技术科普内容，行情与参数随货源、批次、软件版本变化，实际配置与价格以沟通确认为准。</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

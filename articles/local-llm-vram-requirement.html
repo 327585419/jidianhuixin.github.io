@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7fafc">
+<title>本地部署大模型要多少显存？一份可以照着算的对照表 | 四川积电汇芯科技有限公司</title>
+<meta name="description" content="不给玄学公式，给一张按参数量、精度、量化方式、上下文长度查的表，再教你按自己场景微调。">
+<meta name="keywords" content="大模型显存需求,本地部署 显存计算,7B 14B 32B 70B 显存">
+<meta name="author" content="四川积电汇芯科技有限公司">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://327585419.github.io/jidianhuixin.github.io/articles/local-llm-vram-requirement.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="四川积电汇芯科技有限公司">
+<meta property="og:title" content="本地部署大模型要多少显存？一份可以照着算的对照表">
+<meta property="og:description" content="不给玄学公式，给一张按参数量、精度、量化方式、上下文长度查的表，再教你按自己场景微调。">
+<meta property="og:url" content="https://327585419.github.io/jidianhuixin.github.io/articles/local-llm-vram-requirement.html">
+<meta property="og:image" content="https://327585419.github.io/jidianhuixin.github.io/assets/img/神机宣传图_横版.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="article.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"本地部署大模型要多少显存？一份可以照着算的对照表","description":"不给玄学公式，给一张按参数量、精度、量化方式、上下文长度查的表，再教你按自己场景微调。","datePublished":"2026-09-24","dateModified":"2026-09-24","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/local-llm-vram-requirement.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"本地部署大模型要多少显存？一份可以照着算的对照表","item":"https://327585419.github.io/jidianhuixin.github.io/articles/local-llm-vram-requirement.html"}]}]}</script>
+</head>
+<body>
+<header class="art-top">
+  <div class="container">
+    <a class="art-brand" href="../index.html"><span class="mark">积</span>积电汇芯 · 算力知识库</a>
+    <nav class="art-nav">
+      <a href="index.html">全部文章</a>
+      <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#contact">联系我们</a>
+    </nav>
+  </div>
+</header>
+<main class="art">
+  <article class="art-wrap">
+    <nav class="art-crumb"><a href="../index.html">首页</a> / <a href="index.html">算力知识库</a> / 正文</nav>
+    <h1 class="art-title">本地部署大模型要多少显存？一份可以照着算的对照表</h1>
+    <div class="art-meta">
+      <span>发布：2026-09-24</span>
+      <span>分类：部署实操</span>
+      <span>阅读约 7 分钟</span>
+    </div>
+    <div class="art-body">
+<h2>先给结论：一张能照着算的显存对照表</h2>
+<p>大模型显存占用，核心就三块：<strong>权重 + KV Cache + 运行时开销</strong>。先看权重这张表，按“参数量 × 每参数字节数”估算，已包含约 10% 冗余。</p>
+<table><thead><tr><th>模型规模</th><th>FP16（2 字节）</th><th>INT8（1 字节）</th><th>INT4（0.5 字节）</th></tr></thead><tbody><tr><td>7B</td><td>约 15~16 GB</td><td>约 8~9 GB</td><td>约 5~6 GB</td></tr><tr><td>14B</td><td>约 30~32 GB</td><td>约 16~17 GB</td><td>约 9~10 GB</td></tr><tr><td>32B</td><td>约 68~72 GB</td><td>约 36~38 GB</td><td>约 20~22 GB</td></tr><tr><td>70B</td><td>约 150~158 GB</td><td>约 78~82 GB</td><td>约 42~45 GB</td></tr></tbody></table>
+<p>这张表只解决“装得下”，不解决“跑得动”。下面逐项拆开。</p>
+<h2>KV Cache：最容易被低估的显存黑洞</h2>
+<p>KV Cache 与上下文长度、批大小、层数、KV head 数成正比。简化估法：</p>
+<p><strong>KV Cache ≈ 2 × 层数 × KV head 数 × head_dim × 序列长度 × 批大小 × 精度字节数</strong></p>
+<p>以 7B 模型（32 层、32 个 KV head、head_dim 128）为例，FP16 下单条 4K 上下文约 2 GB；到 32K 就接近 16 GB，直接吃掉一张 24G 卡。Llama 3 等模型用 GQA 把 KV head 压到 8 个，同样上下文能省约 4 倍。实用口诀：<strong>权重是固定的，KV Cache 是随上下文和并发线性膨胀的</strong>，长上下文场景必须单独留预算。</p>
+<h2>权重之外：为什么“刚好够”往往 OOM</h2>
+<ul>
+<li><strong>激活值</strong>：推理时随 batch 和序列长度波动，通常预留 1~3 GB。</li>
+<li><strong>框架开销</strong>：PyTorch、CUDA runtime、cuBLAS/cuDNN 句柄，约 0.5~1.5 GB。</li>
+<li><strong>CUDA 上下文</strong>：每张卡固定占用几百 MB，多卡时每卡都要算。</li>
+<li><strong>显存碎片</strong>：动态分配会留下空洞，实际可用往往比标称少 5%~10%。</li>
+</ul>
+<p>所以经验法则是：<strong>权重 + KV Cache + 2~4 GB 缓冲</strong>，低于这个数就是赌运气。</p>
+<h2>量化的代价：省显存，但别只看显存</h2>
+<p>INT8 通常精度损失很小，速度也有提升；INT4（GPTQ/AWQ 等）能把 70B 压到单卡 48G 甚至 40G 级别，但代价是：<strong>复杂推理、代码、数学任务上质量下降更明显，长上下文时退化加剧</strong>。另外，量化 kernel 的实际吞吐取决于框架和硬件，V100 这类 sm_70 老卡在新版 vLLM/PyTorch 上支持已逐步淡化，<strong>具体版本组合需实测确认</strong>。结论：能 INT8 就别 INT4；INT4 适合“先跑起来”的验证场景，不适合对精度敏感的生产任务。</p>
+<h2>多卡怎么切：张量并行 vs 流水并行</h2>
+<ul>
+<li><strong>张量并行（TP）</strong>：把每层权重切到多卡，通信频繁，适合 NVLink/NVSwitch 机器。V100 SXM2 支持 NVLink 2.0（约 300 GB/s 双向聚合），A100 SXM4 带宽更高。TP 能显著降低单卡权重压力，但 KV Cache 仍按卡分摊。</li>
+<li><strong>流水并行（PP）</strong>：按层切分，通信少，但会有气泡、延迟高，适合跨机或 PCIe 互联。</li>
+</ul>
+<p>显存意义：TP 让 70B INT4 从“单卡 48G”变成“两张 24G 可跑”，但 PCIe 3.0 的 V100 PCIe 版做 TP 会明显受带宽拖累。</p>
+<h2>四档显存的性价比定位</h2>
+<table><thead><tr><th>档位</th><th>典型卡</th><th>适合场景</th><th>定位</th></tr></thead><tbody><tr><td>24G</td><td>RTX 4090</td><td>7B FP16 / 14B INT4、单机开发</td><td>消费级性价比高，但无 NVLink、无 ECC、非服务器风道</td></tr><tr><td>32G</td><td>V100 32G</td><td>7B~14B 推理、32B INT4 尝鲜</td><td>二手整机约 1.8 万~2.3 万元（截至 2026 年，以当日货源为准），老卡但显存够用</td></tr><tr><td>40G</td><td>A100 40G</td><td>14B FP16、32B INT8</td><td>支持 BF16、MIG，注意区分 SXM4 与 PCIe 带宽功耗不同</td></tr><tr><td>80G</td><td>A100 80G</td><td>70B INT4、32B FP16 多并发</td><td>单卡天花板，带宽约 2039 GB/s，适合私有化生产</td></tr></tbody></table>
+<p>二手 V100 32G SXM2 拆机卡约 3000~6000 元，PCIe 版约 6000~9000 元；云上 V100 实例月付约 3800 元级，租用约 0.16 美元/GPU/小时起（均为 2026 年公开行情，仅供参考，以当日货源与云厂商报价为准）。</p>
+<h2>结论与建议</h2>
+<p>先按“权重 + KV Cache + 3 GB 缓冲”算总账，再决定量化等级和卡数。7B/14B 优先 24G~32G 单卡；32B 建议 40G 起步或双卡 TP；70B 走 INT4 + 80G 或多卡。老卡 V100 显存便宜但生态在退潮，A100 更稳但预算更高。<strong>别为省一点显存把精度和稳定性搭进去</strong>，生产环境留足余量比压线跑更重要。</p>
+<p>需要按你的模型、上下文和并发数算一份具体配置，或者想看现货整机与“先租后买/月付整卡”方案，可在文末联系获取配置与报价。</p>
+    </div>
+
+    <aside class="art-cta">
+      <h2>需要一份具体的配置与报价？</h2>
+      <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
+      <div class="btns">
+        <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
+        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+      </div>
+    </aside>
+
+    <nav class="art-rel">
+      <h2>继续了解</h2>
+      <ul>
+        <li><a href="v100-vs-a100.html">V100 和 A100 怎么选？一张决策表说清差价到底买到了什么</a></li>
+        <li><a href="v100-finetune-lora.html">用 V100 微调大模型可行吗？LoRA 与全参微调的显存账</a></li>
+      </ul>
+    </nav>
+  </article>
+
+  <footer class="art-foot">
+    <div class="art-wrap">
+      <p><strong>四川积电汇芯科技有限公司</strong> · 成都市武侯区晋阳路432号1栋E馆3楼329室</p>
+      <p>电话/微信：<a href="tel:+8618683421636">186-8342-1636</a> ｜ 邮箱：<a href="mailto:327585419@qq.com">327585419@qq.com</a> ｜ <a href="../index.html">返回官网首页</a></p>
+      <p>本文为通用选型与技术科普内容，行情与参数随货源、批次、软件版本变化，实际配置与价格以沟通确认为准。</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

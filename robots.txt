@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /thanks.html
 
+# 全站站点地图（首页 + 算力知识库全部文章）
 Sitemap: https://327585419.github.io/jidianhuixin.github.io/sitemap.xml
