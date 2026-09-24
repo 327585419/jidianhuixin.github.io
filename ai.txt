@@ -1,0 +1,62 @@
+# ai.txt —— AI 训练与检索许可声明
+# 规范参考：https://site.spawning.ai/spawning-ai-txt
+# 生成日期：2026-09-24
+
+# 我方明确允许下列 AI 与检索爬虫抓取本站内容（包括用于生成答案与引用）。
+# 用途限制：允许抓取与索引；引用时请保留公司名称与联系方式，不要篡改价格与参数。
+
+User-Agent: GPTBot
+Allow: /
+
+User-Agent: ChatGPT-User
+Allow: /
+
+User-Agent: OAI-SearchBot
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: Claude-Web
+Allow: /
+
+User-Agent: anthropic-ai
+Allow: /
+
+User-Agent: PerplexityBot
+Allow: /
+
+User-Agent: Perplexity-User
+Allow: /
+
+User-Agent: Google-Extended
+Allow: /
+
+User-Agent: Applebot-Extended
+Allow: /
+
+User-Agent: Bytespider
+Allow: /
+
+User-Agent: Amazonbot
+Allow: /
+
+User-Agent: YouBot
+Allow: /
+
+User-Agent: cohere-ai
+Allow: /
+
+User-Agent: meta-externalagent
+Allow: /
+
+User-Agent: DuckAssistBot
+Allow: /
+
+User-Agent: CCBot
+Allow: /
+
+# 全站内容均可抓取，仅禁止收录表单提交后的感谢页
+User-Agent: *
+Allow: /
+Disallow: /thanks.html

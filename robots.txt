@@ -1,6 +1,42 @@
+# ============ AI 与检索爬虫：显式允许 ============
+# 说明见 /ai.txt；AI 可读的事实清单见 /llms.txt
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+# ============ 通用爬虫 ============
 User-agent: *
 Allow: /
 Disallow: /thanks.html
 
-# 全站站点地图（首页 + 算力知识库全部文章）
+# ============ 站点地图 ============
 Sitemap: https://327585419.github.io/jidianhuixin.github.io/sitemap.xml
