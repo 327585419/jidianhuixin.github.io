@@ -16,7 +16,7 @@ import { MANIFEST } from './manifest.mjs';
 const SITE = '/home/jdhx/四川积电汇芯网站';
 const ART_DIR = path.join(SITE, 'articles');
 const SITE_URL = 'https://327585419.github.io/jidianhuixin.github.io';
-const TODAY = '2026-09-24';
+const TODAY = new Date().toISOString().slice(0, 10); // 生成日即发布日，避免新文章日期过期
 const PHONE = '186-8342-1636';
 const PHONE_TEL = '+8618683421636';
 const EMAIL = '327585419@qq.com';

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7fafc">
+<title>GPU 服务器一天电费多少钱？把 24 小时挂机的电费账算清楚 | 四川积电汇芯科技有限公司</title>
+<meta name="description" content="从整机功耗构成、当地电价到 24 小时/月/年的电费账单，教你自己算，并给出省电的三个工程手段。">
+<meta name="keywords" content="GPU服务器 电费,显卡挂机电费,V100 功耗 电费,A100 一天耗电">
+<meta name="author" content="四川积电汇芯科技有限公司">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://327585419.github.io/jidianhuixin.github.io/articles/gpu-server-electricity-cost.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="四川积电汇芯科技有限公司">
+<meta property="og:title" content="GPU 服务器一天电费多少钱？把 24 小时挂机的电费账算清楚">
+<meta property="og:description" content="从整机功耗构成、当地电价到 24 小时/月/年的电费账单，教你自己算，并给出省电的三个工程手段。">
+<meta property="og:url" content="https://327585419.github.io/jidianhuixin.github.io/articles/gpu-server-electricity-cost.html">
+<meta property="og:image" content="https://327585419.github.io/jidianhuixin.github.io/assets/img/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="article.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"GPU 服务器一天电费多少钱？把 24 小时挂机的电费账算清楚","description":"从整机功耗构成、当地电价到 24 小时/月/年的电费账单，教你自己算，并给出省电的三个工程手段。","datePublished":"2026-10-12","dateModified":"2026-10-12","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https://327585419.github.io/jidianhuixin.github.io/articles/gpu-server-electricity-cost.html"},"author":{"@type":"Organization","name":"四川积电汇芯科技有限公司"},"publisher":{"@type":"Organization","name":"四川积电汇芯科技有限公司","logo":{"@type":"ImageObject","url":"https://327585419.github.io/jidianhuixin.github.io/assets/img/品牌宣传片_封面.webp"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://327585419.github.io/jidianhuixin.github.io/"},{"@type":"ListItem","position":2,"name":"算力知识库","item":"https://327585419.github.io/jidianhuixin.github.io/articles/"},{"@type":"ListItem","position":3,"name":"GPU 服务器一天电费多少钱？把 24 小时挂机的电费账算清楚","item":"https://327585419.github.io/jidianhuixin.github.io/articles/gpu-server-electricity-cost.html"}]}]}</script>
+</head>
+<body>
+<header class="art-top">
+  <div class="container">
+    <a class="art-brand" href="../index.html"><span class="mark">积</span>积电汇芯 · 算力知识库</a>
+    <nav class="art-nav">
+      <a href="index.html">全部文章</a>
+      <a href="../index.html#products">产品服务</a>
+      <a href="../index.html#contact">联系我们</a>
+    </nav>
+  </div>
+</header>
+<main class="art">
+  <article class="art-wrap">
+    <nav class="art-crumb"><a href="../index.html">首页</a> / <a href="index.html">算力知识库</a> / 正文</nav>
+    <h1 class="art-title">GPU 服务器一天电费多少钱？把 24 小时挂机的电费账算清楚</h1>
+    <div class="art-meta">
+      <span>发布：2026-10-12</span>
+      <span>分类：成本与回本</span>
+      <span>阅读约 6 分钟</span>
+    </div>
+    <div class="art-body">
+      <p class="art-lead" style="font-size:17px;color:var(--ink-2);background:var(--brand-grad-soft,var(--bg-soft));border-left:3px solid var(--primary);border-radius:0 10px 10px 0;padding:14px 18px;margin-bottom:26px"><strong>结论先行：</strong>别急着看机型，先把账算明白。整机功耗不是只把 GPU 的额定功率加起来就完事，CPU、内存、硬盘、风扇、电源转换损耗都要算进去。工程上常用的估算公式是：</p>
+
+<h2>先把公式摆出来：一天电费到底怎么算</h2>
+<p>别急着看机型，先把账算明白。整机功耗不是只把 GPU 的额定功率加起来就完事，CPU、内存、硬盘、风扇、电源转换损耗都要算进去。工程上常用的估算公式是：</p>
+<p><strong>整机功耗（kW） ≈ GPU 额定功耗之和 × 1.15 + CPU/内存/盘/风扇等基础功耗</strong></p>
+<p>那个 1.15 是给电源转换和冗余留的余量，实际会因电源金牌/白金牌效率不同而浮动。然后再套电费公式：</p>
+<p><strong>日电费 = 整机功耗（kW） × 24 小时 × 电价（元/度）</strong></p>
+<p>举个例子：一台 4 卡 V100 SXM2 整机，GPU 额定 300W × 4 = 1200W，乘 1.15 约 1380W，再加主板、CPU、内存、盘和风扇约 200~300W，整机实际约 1.6~1.7 kW。按 0.8 元/度算，一天就是 1.65 × 24 × 0.8 ≈ 31.7 元。这就是基本盘。</p>
+<h2>常见机型功耗与日电费区间</h2>
+<p>下表按 24 小时满载估算，电价取 0.6 元/度和 1.0 元/度两档做区间，方便对照。注意这是“满载且 24 小时不歇”的口径，实际跑推理或轻载会低不少。</p>
+<table><thead><tr><th>机型</th><th>整机典型功耗</th><th>日电费（0.6 元/度）</th><th>日电费（1.0 元/度）</th></tr></thead><tbody><tr><td>V100 32G 单卡整机</td><td>约 0.5~0.6 kW</td><td>7~9 元</td><td>12~15 元</td></tr><tr><td>V100 32G 4 卡整机</td><td>约 1.6~1.8 kW</td><td>23~26 元</td><td>38~43 元</td></tr><tr><td>V100 32G 8 卡整机</td><td>约 3.0~3.4 kW</td><td>43~49 元</td><td>72~82 元</td></tr><tr><td>A100 80G 4 卡整机</td><td>约 2.4~2.8 kW</td><td>35~40 元</td><td>58~67 元</td></tr><tr><td>A100 80G 8 卡整机</td><td>约 4.5~5.5 kW</td><td>65~79 元</td><td>108~132 元</td></tr></tbody></table>
+<p>A100 要分 SXM4 和 PCIe 两个口径，SXM4 带宽和功耗都更高，整机差距可能到 20% 以上，具体以实测为准。V100 也分 PCIe 250W 和 SXM2 300W，别混着算。至于 RTX 4090 这类消费卡，单卡 24GB 显存、约 1008 GB/s 带宽，性价比高，但没 NVLink、无 ECC、非服务器风道，多卡整机散热和稳定性要单独评估，功耗也需实测确认。</p>
+<h2>电价差一倍，账就完全不一样</h2>
+<p>同样一台 8 卡 V100 整机，为什么有人算出 45 元、有人算出 80 元？差别全在电价。</p>
+<ul>
+<li><strong>居民阶梯</strong>：第一档可能 0.5 元出头，用到第三档就逼近 0.8~0.9 元，机房放家里很快跨档。</li>
+<li><strong>商业/一般工商业电价</strong>：常见 0.7~1.1 元/度，还要看是否含基本电费、力调电费。</li>
+<li><strong>峰谷电价</strong>：谷段可能低到 0.3~0.4 元，峰段能到 1.2 元以上。把训练任务排到谷段，电费能省三到四成。</li>
+</ul>
+<p>所以“同机型电费差一倍”不是夸张，是真实存在的。成都地区具体以当地电价单和园区/物业的结算口径为准，这里给的是参考区间，截至 2026 年。</p>
+<h2>省电三件事，能立刻执行</h2>
+<ol>
+<li><strong>限制功率上限</strong>：用 <code>nvidia-smi -pl</code> 把 GPU 功耗墙压到额定值的 70%~80%，多数推理任务性能损失很小，电费直接降一截。</li>
+<li><strong>按需开关机 / 调度</strong>：不是所有任务都要 24 小时满转。训练排谷段、推理做弹性扩缩，闲时关机或休眠，比一直挂着省得多。</li>
+<li><strong>推理框架省显存就是省电</strong>：量化、KV Cache 优化、批处理调优，让同样的卡跑更多请求，单位算力的电费就下来了。省显存和省电在推理场景里往往是一回事。</li>
+</ol>
+<h2>把电费放进回本测算，才算真回本</h2>
+<p>很多人算回本只盯着“月租收入减卡钱”，漏了电费、折旧和运维这三块。正确的口径是：</p>
+<p><strong>月净收益 = 月租收入 − 电费 − 折旧 − 运维/带宽/场地</strong></p>
+<p>一台 8 卡 V100 整机，日电费按 50 元算，一个月就是 1500 元左右；再算上折旧和运维，月租收入必须明显高于这个数才叫真回本。截至 2026 年，二手 V100 32G SXM2 拆机卡约 3000~6000 元，PCIe 版约 6000~9000 元，九成新整机约 1.8 万~2.3 万元；云上 V100 实例月付约 3800 元级，按小时约 0.16 美元/GPU/小时起。以上均为公开行情，仅供参考，以当日货源和云厂商当期报价为准。自建还是租云，把电费摊进去再比，结论常常会反过来。</p>
+<h2>结论与建议</h2>
+<p>电费这笔账，核心就三句话：整机功耗要按 GPU 额定乘余量再加基础功耗算，日电费等于千瓦乘 24 乘电价，电价口径决定最终数字能差一倍。V100 单卡整机一天大约 7~15 元，8 卡整机 43~82 元；A100 8 卡整机 65~132 元，具体看 SXM4 还是 PCIe、看当地电价。想省钱，先压功率墙、再排谷段、最后优化推理框架。买卡或租卡之前，一定把电费、折旧、运维一起放进回本表里算。</p>
+<p>如果你在成都，想按自己的机型、卡数和当地电价把日电费和回本周期算清楚，可以在文末联系获取配置与报价，把场景说清楚，账就能算得更准。</p>
+    </div>
+
+    <aside class="art-cta">
+      <h2>需要一份具体的配置与报价？</h2>
+      <p>四川积电汇芯科技有限公司提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
+      <div class="btns">
+        <a class="btn" href="tel:+8618683421636">电话/微信 186-8342-1636</a>
+        <a class="btn ghost" href="../index.html#contact">在线留言</a>
+      </div>
+    </aside>
+
+    <nav class="art-rel">
+      <h2>继续了解</h2>
+      <ul>
+        <li><a href="ollama-vs-vllm-local-serving.html">Ollama 和 vLLM 怎么选？本地部署推理框架对比</a></li>
+        <li><a href="llm-appliance-enterprise-guide.html">大模型一体机是什么？企业落地需要什么配置、什么价</a></li>
+      </ul>
+    </nav>
+  </article>
+
+  <footer class="art-foot">
+    <div class="art-wrap">
+      <p><strong>四川积电汇芯科技有限公司</strong> · 成都市武侯区晋阳路432号1栋E馆3楼329室</p>
+      <p>电话/微信：<a href="tel:+8618683421636">186-8342-1636</a> ｜ 邮箱：<a href="mailto:327585419@qq.com">327585419@qq.com</a> ｜ <a href="../index.html">返回官网首页</a></p>
+      <p>本文为通用选型与技术科普内容，行情与参数随货源、批次、软件版本变化，实际配置与价格以沟通确认为准。</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

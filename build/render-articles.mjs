@@ -12,7 +12,7 @@ const ART = path.join(SITE, 'articles');
 
 // 从 gen-articles.mjs 复用模板：直接 import 不方便（有副作用），所以这里内联同款渲染
 const SITE_URL = 'https://327585419.github.io/jidianhuixin.github.io';
-const TODAY = '2026-09-24';
+const TODAY = new Date().toISOString().slice(0, 10); // 生成日即发布日，避免新文章日期过期
 const PHONE = '186-8342-1636', PHONE_TEL = '+8618683421636', EMAIL = '327585419@qq.com';
 const ADDR = '成都市武侯区晋阳路432号1栋E馆3楼329室';
 const COMPANY = '四川积电汇芯科技有限公司';
