@@ -68,7 +68,7 @@ function buildPage(item, bodyHtml, excerpt, idx) {
 <meta property="og:title" content="${esc(item.title)}">
 <meta property="og:description" content="${esc(excerpt)}">
 <meta property="og:url" content="${url}">
-<meta property="og:image" content="${SITE_URL}/assets/img/神机宣传图_横版.webp">
+<meta property="og:image" content="${SITE_URL}/assets/img/og-cover.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2304060c'/%3E%3Ctext x='32' y='42' font-size='30' text-anchor='middle' fill='%2322d3ee' font-family='monospace' font-weight='bold'%3E%E7%A7%AF%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="article.css">
