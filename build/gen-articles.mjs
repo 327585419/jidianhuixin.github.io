@@ -264,6 +264,7 @@ ${bodyHtml}
       <p>${COMPANY}提供 V100 / A100 单卡与整机、1~8 卡定制、本地大模型私有化部署。报需求即出配置清单与报价，成都可面交上门，外地顺丰保价。</p>
       <div class="btns">
         <a class="btn" href="tel:${PHONE_TEL}">电话/微信 ${PHONE}</a>
+        <a class="btn ghost" href="../tools/gpu-advisor.html">免费算力选型</a>
         <a class="btn ghost" href="../index.html#contact">在线留言</a>
       </div>
     </aside>
@@ -352,6 +353,7 @@ ${sections}
       <p>把模型名称、日调用量、是否训练告诉我们，${COMPANY}给一份配置建议 + 报价，不推销超配方案。</p>
       <div class="btns">
         <a class="btn" href="tel:${PHONE_TEL}">电话/微信 ${PHONE}</a>
+        <a class="btn ghost" href="../tools/gpu-advisor.html">免费算力选型</a>
         <a class="btn ghost" href="../index.html#contact">在线留言</a>
       </div>
     </aside>

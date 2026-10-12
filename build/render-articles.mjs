@@ -106,6 +106,7 @@ ${bodyHtml}
       <div class="btns">
         <a class="btn" href="tel:${PHONE_TEL}">电话/微信 ${PHONE}</a>
         <a class="btn ghost" href="../tools/gpu-advisor.html">免费算力选型</a>
+        <a class="btn ghost" href="../index.html#contact">在线留言</a>
       </div>
     </aside>
 
